@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_identity_slugs",
+  "info": {
+    "displayName": "slug"
+  },
+  "options": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 16,
+      "required": true,
+      "unique": true
+    },
+    "title": {
+      "type": "string",
+      "minLength": 8,
+      "required": true
+    }
+  },
+  "config": {}
+}
