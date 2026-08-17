@@ -17,10 +17,9 @@
       "required": true
     },
     "content": {
-      "type": "dynamiczone",
-      "components": [
-        "shared.hero"
-      ],
+      "type": "component",
+      "component": "shared.hero",
+      "repeatable": true,
       "required": true
     }
   }

@@ -110,15 +110,11 @@ export interface SectionDto {
   content: BlocksDto;
 }
 
-export type DynamicZoneDto = HeroDto | SectionDto;
-
 // Top-level pages ----------------------------------------------------
 
-export type PageType = "page" | "home-page" | "event" | "news" | "contact";
-
-export interface PageDto {
-  pageType: "page";
-  identity?: IdentityDto;
+export interface ArticleDto {
+  pageType: "article";
+  identity: IdentityDto;
   sections: SectionDto[];
 }
 
@@ -130,7 +126,7 @@ export interface HomePageDto {
 
 export interface EventDto {
   pageType: "event";
-  identity?: IdentityDto;
+  identity: IdentityDto;
   summary: string;
   when?: string;
   content: BlocksDto;
@@ -138,22 +134,11 @@ export interface EventDto {
 
 export interface NewsDto {
   pageType: "news";
-  identity?: IdentityDto;
+  identity: IdentityDto;
   summary: string;
   content: BlocksDto;
 }
 
-export interface ContactDto {
-  pageType: "contact";
-  name: string;
-  email?: string;
-  address?: string;
-  extras?: string;
-}
+export type CmsPageDto = ArticleDto | HomePageDto | EventDto | NewsDto;
 
-export type CmsPageDto =
-  | PageDto
-  | HomePageDto
-  | EventDto
-  | NewsDto
-  | ContactDto;
+export type PageType = CmsPageDto["pageType"];

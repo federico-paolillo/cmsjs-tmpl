@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      APP_KEYS: build-key-a,build-key-b
+      API_TOKEN_SALT: build-api-salt
+      ADMIN_JWT_SECRET: build-admin-secret
+      TRANSFER_TOKEN_SALT: build-transfer-salt
+      JWT_SECRET: build-jwt-secret
+      ENCRYPTION_KEY: build-encryption-key
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+      - run: npm ci
+        working-directory: backend
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run build
+        working-directory: backend
+      - run: npx tsc --noEmit
+        working-directory: backend
+      - name: Smoke fresh Strapi schema
+        working-directory: backend
+        env:
+          HOST: 127.0.0.1
+          PORT: 1337
+          DATABASE_FILENAME: .tmp/ci.db
+        run: |
+          npm run start > /tmp/strapi.log 2>&1 &
+          strapi_pid=$!
+          trap 'kill "$strapi_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..60}; do
+            curl --silent --output /dev/null http://127.0.0.1:1337/admin/init && break
+            sleep 2
+          done
+          for endpoint in home-page articles news events; do
+            status=$(curl --silent --output /dev/null --write-out '%{http_code}' "http://127.0.0.1:1337/api/$endpoint")
+            case "$status" in 200|403) ;; *) exit 1 ;; esac
+          done
+          test "$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:1337/api/pages)" = 404
+      - run: npm run openapi
+        working-directory: backend
+      - run: npm run openapi
+        working-directory: frontend
+      - run: git diff --exit-code -- backend/types/generated cms-api.json frontend/cms/schema.d.ts
+      - run: npm run check
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
+      - run: npm run test:integration
+        working-directory: frontend

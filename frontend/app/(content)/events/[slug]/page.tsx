@@ -1,41 +1,24 @@
-import { CmsConnector } from "@cmsjs/cms/connector";
-import { EventDto } from "@cmsjs/cms/model";
-import { Result } from "@cmsjs/cms/result";
+import { getEventBySlug } from "@cmsjs/cms/data";
 import { PageSwitch } from "@cmsjs/components/page-switch";
-import { getDeps } from "@cmsjs/deps";
-import { cacheLife, cacheTag } from "next/cache";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-export interface EventPageProps {
-  params: Promise<{ slug: string }>;
-}
-
-export async function getEventBySlug(
-  connector: CmsConnector,
-  slug: string
-): Promise<Result<EventDto>> {
-  'use cache';
-
-  cacheTag("events", `events:${slug}`);
-  cacheLife("days");
-
-  return await connector.getEventBySlug(slug);
-}
-
-export default async function EventPage({ params }: EventPageProps) {
-  const deps = getDeps();
-
-  const { slug } = await params;
-
-  const eventPageResult = await getEventBySlug(deps.connector, slug);
-
-  if (eventPageResult.ok) {
-    return <PageSwitch page={eventPageResult.value} />;
-  }
-
-  if (eventPageResult.problem.kind === "not_found") {
+export async function generateMetadata({
+  params,
+}: PageProps<"/events/[slug]">): Promise<Metadata> {
+  const page = await getEventBySlug((await params).slug);
+  if (!page) {
     notFound();
   }
+  return { title: page.identity.title, description: page.summary };
+}
 
-  throw eventPageResult.problem;
+export default async function EventRoute({
+  params,
+}: PageProps<"/events/[slug]">) {
+  const page = await getEventBySlug((await params).slug);
+  if (!page) {
+    notFound();
+  }
+  return <PageSwitch page={page} />;
 }

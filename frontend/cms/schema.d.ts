@@ -4,17 +4,33 @@
  */
 
 export interface paths {
-  "/contact": {
+  "/articles": {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations["contact/get/contact"];
-    put: operations["contact/put/contact"];
+    get: operations["article/get/articles"];
+    put?: never;
+    post: operations["article/post/articles"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/articles/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["article/get/articles_by_id"];
+    put: operations["article/put/articles_by_id"];
     post?: never;
-    delete: operations["contact/delete/contact"];
+    delete: operations["article/delete/articles_by_id"];
     options?: never;
     head?: never;
     patch?: never;
@@ -68,65 +84,33 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/newses": {
+  "/news": {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations["news/get/newses"];
+    get: operations["news-item/get/news"];
     put?: never;
-    post: operations["news/post/newses"];
+    post: operations["news-item/post/news"];
     delete?: never;
     options?: never;
     head?: never;
     patch?: never;
     trace?: never;
   };
-  "/newses/{id}": {
+  "/news/{id}": {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations["news/get/newses_by_id"];
-    put: operations["news/put/newses_by_id"];
+    get: operations["news-item/get/news_by_id"];
+    put: operations["news-item/put/news_by_id"];
     post?: never;
-    delete: operations["news/delete/newses_by_id"];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/pages": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations["page/get/pages"];
-    put?: never;
-    post: operations["page/post/pages"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/pages/{id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations["page/get/pages_by_id"];
-    put: operations["page/put/pages_by_id"];
-    post?: never;
-    delete: operations["page/delete/pages_by_id"];
+    delete: operations["news-item/delete/news_by_id"];
     options?: never;
     head?: never;
     patch?: never;
@@ -638,6 +622,69 @@ export interface components {
       /** @description A string field */
       title: string;
     };
+    SharedSectionEntry: {
+      /** @description A string field */
+      header?: string;
+      /** @description A blocks field */
+      content: unknown[];
+      /** @description A media field */
+      hero?: components["schemas"]["PluginUploadFileDocument"];
+    };
+    PluginUploadFileDocument: {
+      /**
+       * Format: uuid
+       * @description The document ID, represented by a UUID
+       */
+      documentId: string;
+      id: string | number;
+      /** @description A string field */
+      name: string;
+      /** @description A text field */
+      alternativeText?: string;
+      /** @description A text field */
+      caption?: string;
+      /** @description A JSON field */
+      focalPoint?: unknown;
+      /** @description An integer field */
+      width?: number;
+      /** @description An integer field */
+      height?: number;
+      /** @description A JSON field */
+      formats?: unknown;
+      /** @description A string field */
+      hash: string;
+      /** @description A string field */
+      ext?: string;
+      /** @description A string field */
+      mime: string;
+      /** @description A decimal field */
+      size: number;
+      /** @description A text field */
+      url: string;
+      /** @description A text field */
+      previewUrl?: string;
+      /** @description A string field */
+      provider: string;
+      /** @description A JSON field */
+      provider_metadata?: unknown;
+      /** @description A datetime field */
+      createdAt?: string;
+      /** @description A datetime field */
+      updatedAt?: string;
+      /** @description A datetime field */
+      publishedAt: string;
+      related: unknown;
+    };
+    SharedHeroEntry: {
+      /** @description A string field */
+      headline: string;
+      /** @description A string field */
+      subheading?: string;
+      /** @description A string field */
+      cta?: string;
+      /** @description A media field */
+      visual: components["schemas"]["PluginUploadFileDocument"];
+    };
   };
   responses: never;
   parameters: never;
@@ -647,22 +694,43 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  "contact/get/contact": {
+  "article/get/articles": {
     parameters: {
       query?: {
-        fields?: (
-          | "name"
-          | "email"
-          | "address"
-          | "extras"
-          | "createdAt"
-          | "updatedAt"
-          | "publishedAt"
-        )[];
-        populate?: "*" | never | never[];
+        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
         filters?: {
           [key: string]: unknown;
         };
+        _q?: string;
+        "pagination[withCount]"?: boolean;
+        "pagination[page]"?: number;
+        "pagination[pageSize]"?: number;
+        "pagination[start]"?: number;
+        "pagination[limit]"?: number;
+        sort?:
+          | ("createdAt" | "updatedAt" | "publishedAt")
+          | ("createdAt" | "updatedAt" | "publishedAt")[]
+          | {
+              [key: string]: "asc" | "desc";
+            }
+          | {
+              [key: string]: "asc" | "desc";
+            }[];
+        populate?:
+          | "*"
+          | ("identity" | "sections")
+          | ("identity" | "sections")[];
+        status?: "draft" | "published";
+        publicationFilter?:
+          | "never-published"
+          | "has-published-version"
+          | "modified"
+          | "unmodified"
+          | "never-published-document"
+          | "has-published-version-document"
+          | "published-without-draft"
+          | "published-with-draft";
+        hasPublishedVersion?: boolean | ("true" | "false");
       };
       header?: never;
       path?: never;
@@ -684,27 +752,17 @@ export interface operations {
                */
               documentId: string;
               id: string | number;
-              /** @description A string field */
-              name: string;
-              /**
-               * Format: email
-               * @description An email field
-               */
-              email?: string;
-              /** @description A string field */
-              address?: string;
-              /** @description A text field */
-              extras?: string;
               /** @description A datetime field */
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.032Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
-            };
+              /** @description A component field */
+              identity: components["schemas"]["IdentitySlugEntry"];
+              /** @description A component field */
+              sections: components["schemas"]["SharedSectionEntry"][];
+            }[];
           };
         };
       };
@@ -745,19 +803,25 @@ export interface operations {
       };
     };
   };
-  "contact/put/contact": {
+  "article/post/articles": {
     parameters: {
       query?: {
-        fields?: (
-          | "name"
-          | "email"
-          | "address"
-          | "extras"
-          | "createdAt"
-          | "updatedAt"
-          | "publishedAt"
-        )[];
-        populate?: "*" | never | never[];
+        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
+        populate?:
+          | "*"
+          | ("identity" | "sections")
+          | ("identity" | "sections")[];
+        status?: "draft" | "published";
+        publicationFilter?:
+          | "never-published"
+          | "has-published-version"
+          | "modified"
+          | "unmodified"
+          | "never-published-document"
+          | "has-published-version-document"
+          | "published-without-draft"
+          | "published-with-draft";
+        hasPublishedVersion?: boolean | ("true" | "false");
       };
       header?: never;
       path?: never;
@@ -767,22 +831,12 @@ export interface operations {
       content: {
         "application/json": {
           data: {
-            /** @description A string field */
-            name?: string;
-            /**
-             * Format: email
-             * @description An email field
-             */
-            email?: string;
-            /** @description A string field */
-            address?: string;
-            /** @description A text field */
-            extras?: string;
-            /**
-             * @description A datetime field
-             * @default 2026-08-15T19:28:34.033Z
-             */
-            publishedAt?: string;
+            /** @description A datetime field */
+            publishedAt: string;
+            /** @description A component field */
+            identity: unknown;
+            /** @description A component field */
+            sections: unknown[];
           };
         };
       };
@@ -802,26 +856,16 @@ export interface operations {
                */
               documentId: string;
               id: string | number;
-              /** @description A string field */
-              name: string;
-              /**
-               * Format: email
-               * @description An email field
-               */
-              email?: string;
-              /** @description A string field */
-              address?: string;
-              /** @description A text field */
-              extras?: string;
               /** @description A datetime field */
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.034Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
+              /** @description A component field */
+              identity: components["schemas"]["IdentitySlugEntry"];
+              /** @description A component field */
+              sections: components["schemas"]["SharedSectionEntry"][];
             };
           };
         };
@@ -863,22 +907,42 @@ export interface operations {
       };
     };
   };
-  "contact/delete/contact": {
+  "article/get/articles_by_id": {
     parameters: {
       query?: {
-        fields?: (
-          | "name"
-          | "email"
-          | "address"
-          | "extras"
-          | "createdAt"
-          | "updatedAt"
-          | "publishedAt"
-        )[];
-        populate?: "*" | never | never[];
+        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
+        populate?:
+          | "*"
+          | ("identity" | "sections")
+          | ("identity" | "sections")[];
+        filters?: {
+          [key: string]: unknown;
+        };
+        sort?:
+          | ("createdAt" | "updatedAt" | "publishedAt")
+          | ("createdAt" | "updatedAt" | "publishedAt")[]
+          | {
+              [key: string]: "asc" | "desc";
+            }
+          | {
+              [key: string]: "asc" | "desc";
+            }[];
+        status?: "draft" | "published";
+        publicationFilter?:
+          | "never-published"
+          | "has-published-version"
+          | "modified"
+          | "unmodified"
+          | "never-published-document"
+          | "has-published-version-document"
+          | "published-without-draft"
+          | "published-with-draft";
+        hasPublishedVersion?: boolean | ("true" | "false");
       };
       header?: never;
-      path?: never;
+      path: {
+        id: string;
+      };
       cookie?: never;
     };
     requestBody?: never;
@@ -897,26 +961,218 @@ export interface operations {
                */
               documentId: string;
               id: string | number;
-              /** @description A string field */
-              name: string;
-              /**
-               * Format: email
-               * @description An email field
-               */
-              email?: string;
-              /** @description A string field */
-              address?: string;
-              /** @description A text field */
-              extras?: string;
               /** @description A datetime field */
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.034Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
+              /** @description A component field */
+              identity: components["schemas"]["IdentitySlugEntry"];
+              /** @description A component field */
+              sections: components["schemas"]["SharedSectionEntry"][];
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Unauthorized */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  "article/put/articles_by_id": {
+    parameters: {
+      query?: {
+        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
+        populate?:
+          | "*"
+          | ("identity" | "sections")
+          | ("identity" | "sections")[];
+        status?: "draft" | "published";
+        publicationFilter?:
+          | "never-published"
+          | "has-published-version"
+          | "modified"
+          | "unmodified"
+          | "never-published-document"
+          | "has-published-version-document"
+          | "published-without-draft"
+          | "published-with-draft";
+        hasPublishedVersion?: boolean | ("true" | "false");
+      };
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          data: {
+            /** @description A datetime field */
+            publishedAt?: string;
+            /** @description A component field */
+            identity?: unknown;
+            /** @description A component field */
+            sections?: unknown[];
+          };
+        };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            data: {
+              /**
+               * Format: uuid
+               * @description The document ID, represented by a UUID
+               */
+              documentId: string;
+              id: string | number;
+              /** @description A datetime field */
+              createdAt?: string;
+              /** @description A datetime field */
+              updatedAt?: string;
+              /** @description A datetime field */
+              publishedAt: string;
+              /** @description A component field */
+              identity: components["schemas"]["IdentitySlugEntry"];
+              /** @description A component field */
+              sections: components["schemas"]["SharedSectionEntry"][];
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Unauthorized */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  "article/delete/articles_by_id": {
+    parameters: {
+      query?: {
+        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
+        populate?:
+          | "*"
+          | ("identity" | "sections")
+          | ("identity" | "sections")[];
+        filters?: {
+          [key: string]: unknown;
+        };
+        status?: "draft" | "published";
+        publicationFilter?:
+          | "never-published"
+          | "has-published-version"
+          | "modified"
+          | "unmodified"
+          | "never-published-document"
+          | "has-published-version-document"
+          | "published-without-draft"
+          | "published-with-draft";
+        hasPublishedVersion?: boolean | ("true" | "false");
+      };
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            data: {
+              /**
+               * Format: uuid
+               * @description The document ID, represented by a UUID
+               */
+              documentId: string;
+              id: string | number;
+              /** @description A datetime field */
+              createdAt?: string;
+              /** @description A datetime field */
+              updatedAt?: string;
+              /** @description A datetime field */
+              publishedAt: string;
+              /** @description A component field */
+              identity: components["schemas"]["IdentitySlugEntry"];
+              /** @description A component field */
+              sections: components["schemas"]["SharedSectionEntry"][];
             };
           };
         };
@@ -1044,13 +1300,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.036Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             }[];
           };
         };
@@ -1130,13 +1383,10 @@ export interface operations {
             content: unknown[];
             /** @description A date field */
             when?: string;
-            /**
-             * @description A datetime field
-             * @default 2026-08-15T19:28:34.038Z
-             */
+            /** @description A datetime field */
             publishedAt: string;
             /** @description A component field */
-            identity?: unknown;
+            identity: unknown;
           };
         };
       };
@@ -1166,13 +1416,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.039Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             };
           };
         };
@@ -1296,13 +1543,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.038Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             };
           };
         };
@@ -1384,10 +1628,7 @@ export interface operations {
             content?: unknown[];
             /** @description A date field */
             when?: string;
-            /**
-             * @description A datetime field
-             * @default 2026-08-15T19:28:34.039Z
-             */
+            /** @description A datetime field */
             publishedAt?: string;
             /** @description A component field */
             identity?: unknown;
@@ -1420,13 +1661,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.039Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             };
           };
         };
@@ -1527,13 +1765,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.040Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             };
           };
         };
@@ -1610,13 +1845,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.041Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
-              /** @description A dynamic zone field */
-              content: unknown[];
+              /** @description A component field */
+              content: components["schemas"]["SharedHeroEntry"][];
             };
           };
         };
@@ -1674,12 +1906,9 @@ export interface operations {
           data: {
             /** @description A string field */
             title?: string;
-            /**
-             * @description A datetime field
-             * @default 2026-08-15T19:28:34.041Z
-             */
+            /** @description A datetime field */
             publishedAt?: string;
-            /** @description A dynamic zone field */
+            /** @description A component field */
             content?: unknown[];
           };
         };
@@ -1706,13 +1935,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.041Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
-              /** @description A dynamic zone field */
-              content: unknown[];
+              /** @description A component field */
+              content: components["schemas"]["SharedHeroEntry"][];
             };
           };
         };
@@ -1786,13 +2012,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.042Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
-              /** @description A dynamic zone field */
-              content: unknown[];
+              /** @description A component field */
+              content: components["schemas"]["SharedHeroEntry"][];
             };
           };
         };
@@ -1834,7 +2057,7 @@ export interface operations {
       };
     };
   };
-  "news/get/newses": {
+  "news-item/get/news": {
     parameters: {
       query?: {
         fields?: (
@@ -1909,13 +2132,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.045Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             }[];
           };
         };
@@ -1957,7 +2177,7 @@ export interface operations {
       };
     };
   };
-  "news/post/newses": {
+  "news-item/post/news": {
     parameters: {
       query?: {
         fields?: (
@@ -1992,13 +2212,10 @@ export interface operations {
             summary: string;
             /** @description A blocks field */
             content: unknown[];
-            /**
-             * @description A datetime field
-             * @default 2026-08-15T19:28:34.046Z
-             */
+            /** @description A datetime field */
             publishedAt: string;
             /** @description A component field */
-            identity?: unknown;
+            identity: unknown;
           };
         };
       };
@@ -2026,13 +2243,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.046Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             };
           };
         };
@@ -2074,7 +2288,7 @@ export interface operations {
       };
     };
   };
-  "news/get/newses_by_id": {
+  "news-item/get/news_by_id": {
     parameters: {
       query?: {
         fields?: (
@@ -2145,13 +2359,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.046Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             };
           };
         };
@@ -2193,7 +2404,7 @@ export interface operations {
       };
     };
   };
-  "news/put/newses_by_id": {
+  "news-item/put/news_by_id": {
     parameters: {
       query?: {
         fields?: (
@@ -2230,10 +2441,7 @@ export interface operations {
             summary?: string;
             /** @description A blocks field */
             content?: unknown[];
-            /**
-             * @description A datetime field
-             * @default 2026-08-15T19:28:34.047Z
-             */
+            /** @description A datetime field */
             publishedAt?: string;
             /** @description A component field */
             identity?: unknown;
@@ -2264,13 +2472,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.047Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
+              identity: components["schemas"]["IdentitySlugEntry"];
             };
           };
         };
@@ -2312,7 +2517,7 @@ export interface operations {
       };
     };
   };
-  "news/delete/newses_by_id": {
+  "news-item/delete/news_by_id": {
     parameters: {
       query?: {
         fields?: (
@@ -2368,554 +2573,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.048Z
-               */
+              /** @description A datetime field */
               publishedAt: string;
               /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
-            };
-          };
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Unauthorized */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Forbidden */
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Internal server error */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  "page/get/pages": {
-    parameters: {
-      query?: {
-        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
-        filters?: {
-          [key: string]: unknown;
-        };
-        _q?: string;
-        "pagination[withCount]"?: boolean;
-        "pagination[page]"?: number;
-        "pagination[pageSize]"?: number;
-        "pagination[start]"?: number;
-        "pagination[limit]"?: number;
-        sort?:
-          | ("createdAt" | "updatedAt" | "publishedAt")
-          | ("createdAt" | "updatedAt" | "publishedAt")[]
-          | {
-              [key: string]: "asc" | "desc";
-            }
-          | {
-              [key: string]: "asc" | "desc";
-            }[];
-        populate?:
-          | "*"
-          | ("identity" | "sections")
-          | ("identity" | "sections")[];
-        status?: "draft" | "published";
-        publicationFilter?:
-          | "never-published"
-          | "has-published-version"
-          | "modified"
-          | "unmodified"
-          | "never-published-document"
-          | "has-published-version-document"
-          | "published-without-draft"
-          | "published-with-draft";
-        hasPublishedVersion?: boolean | ("true" | "false");
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            data: {
-              /**
-               * Format: uuid
-               * @description The document ID, represented by a UUID
-               */
-              documentId: string;
-              id: string | number;
-              /** @description A datetime field */
-              createdAt?: string;
-              /** @description A datetime field */
-              updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.049Z
-               */
-              publishedAt: string;
-              /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
-              /** @description A dynamic zone field */
-              sections: unknown[];
-            }[];
-          };
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Unauthorized */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Forbidden */
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Internal server error */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  "page/post/pages": {
-    parameters: {
-      query?: {
-        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
-        populate?:
-          | "*"
-          | ("identity" | "sections")
-          | ("identity" | "sections")[];
-        status?: "draft" | "published";
-        publicationFilter?:
-          | "never-published"
-          | "has-published-version"
-          | "modified"
-          | "unmodified"
-          | "never-published-document"
-          | "has-published-version-document"
-          | "published-without-draft"
-          | "published-with-draft";
-        hasPublishedVersion?: boolean | ("true" | "false");
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: {
-      content: {
-        "application/json": {
-          data: {
-            /**
-             * @description A datetime field
-             * @default 2026-08-15T19:28:34.050Z
-             */
-            publishedAt: string;
-            /** @description A component field */
-            identity?: unknown;
-            /** @description A dynamic zone field */
-            sections: unknown[];
-          };
-        };
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            data: {
-              /**
-               * Format: uuid
-               * @description The document ID, represented by a UUID
-               */
-              documentId: string;
-              id: string | number;
-              /** @description A datetime field */
-              createdAt?: string;
-              /** @description A datetime field */
-              updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.050Z
-               */
-              publishedAt: string;
-              /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
-              /** @description A dynamic zone field */
-              sections: unknown[];
-            };
-          };
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Unauthorized */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Forbidden */
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Internal server error */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  "page/get/pages_by_id": {
-    parameters: {
-      query?: {
-        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
-        populate?:
-          | "*"
-          | ("identity" | "sections")
-          | ("identity" | "sections")[];
-        filters?: {
-          [key: string]: unknown;
-        };
-        sort?:
-          | ("createdAt" | "updatedAt" | "publishedAt")
-          | ("createdAt" | "updatedAt" | "publishedAt")[]
-          | {
-              [key: string]: "asc" | "desc";
-            }
-          | {
-              [key: string]: "asc" | "desc";
-            }[];
-        status?: "draft" | "published";
-        publicationFilter?:
-          | "never-published"
-          | "has-published-version"
-          | "modified"
-          | "unmodified"
-          | "never-published-document"
-          | "has-published-version-document"
-          | "published-without-draft"
-          | "published-with-draft";
-        hasPublishedVersion?: boolean | ("true" | "false");
-      };
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            data: {
-              /**
-               * Format: uuid
-               * @description The document ID, represented by a UUID
-               */
-              documentId: string;
-              id: string | number;
-              /** @description A datetime field */
-              createdAt?: string;
-              /** @description A datetime field */
-              updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.049Z
-               */
-              publishedAt: string;
-              /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
-              /** @description A dynamic zone field */
-              sections: unknown[];
-            };
-          };
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Unauthorized */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Forbidden */
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Internal server error */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  "page/put/pages_by_id": {
-    parameters: {
-      query?: {
-        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
-        populate?:
-          | "*"
-          | ("identity" | "sections")
-          | ("identity" | "sections")[];
-        status?: "draft" | "published";
-        publicationFilter?:
-          | "never-published"
-          | "has-published-version"
-          | "modified"
-          | "unmodified"
-          | "never-published-document"
-          | "has-published-version-document"
-          | "published-without-draft"
-          | "published-with-draft";
-        hasPublishedVersion?: boolean | ("true" | "false");
-      };
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: {
-      content: {
-        "application/json": {
-          data: {
-            /**
-             * @description A datetime field
-             * @default 2026-08-15T19:28:34.050Z
-             */
-            publishedAt?: string;
-            /** @description A component field */
-            identity?: unknown;
-            /** @description A dynamic zone field */
-            sections?: unknown[];
-          };
-        };
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            data: {
-              /**
-               * Format: uuid
-               * @description The document ID, represented by a UUID
-               */
-              documentId: string;
-              id: string | number;
-              /** @description A datetime field */
-              createdAt?: string;
-              /** @description A datetime field */
-              updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.051Z
-               */
-              publishedAt: string;
-              /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
-              /** @description A dynamic zone field */
-              sections: unknown[];
-            };
-          };
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Unauthorized */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Forbidden */
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Internal server error */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  "page/delete/pages_by_id": {
-    parameters: {
-      query?: {
-        fields?: ("createdAt" | "updatedAt" | "publishedAt")[];
-        populate?:
-          | "*"
-          | ("identity" | "sections")
-          | ("identity" | "sections")[];
-        filters?: {
-          [key: string]: unknown;
-        };
-        status?: "draft" | "published";
-        publicationFilter?:
-          | "never-published"
-          | "has-published-version"
-          | "modified"
-          | "unmodified"
-          | "never-published-document"
-          | "has-published-version-document"
-          | "published-without-draft"
-          | "published-with-draft";
-        hasPublishedVersion?: boolean | ("true" | "false");
-      };
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            data: {
-              /**
-               * Format: uuid
-               * @description The document ID, represented by a UUID
-               */
-              documentId: string;
-              id: string | number;
-              /** @description A datetime field */
-              createdAt?: string;
-              /** @description A datetime field */
-              updatedAt?: string;
-              /**
-               * @description A datetime field
-               * @default 2026-08-15T19:28:34.051Z
-               */
-              publishedAt: string;
-              /** @description A component field */
-              identity?: components["schemas"]["IdentitySlugEntry"];
-              /** @description A dynamic zone field */
-              sections: unknown[];
+              identity: components["schemas"]["IdentitySlugEntry"];
             };
           };
         };

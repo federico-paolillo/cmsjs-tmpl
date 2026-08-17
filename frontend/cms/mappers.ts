@@ -1,19 +1,11 @@
 // A set of Strapi 5 Data Model to @cmsjs-tmpl functions that map the Strapi 5 model to ours
 
+import type { ArticleData, EventData, HomePageData, NewsData } from "./client";
 import type {
-  ContactData,
-  EventData,
-  HomePageData,
-  NewsData,
-  PageData,
-} from "./client";
-import type {
+  ArticleDto,
   BlockDto,
   BlocksDto,
-  CmsPageDto,
   CodeBlockDto,
-  ContactDto,
-  DynamicZoneDto,
   EventDto,
   HeadingBlockDto,
   HeroDto,
@@ -27,21 +19,12 @@ import type {
   ListBlockDto,
   ListItemDto,
   NewsDto,
-  PageDto,
-  PageType,
   ParagraphBlockDto,
   QuoteBlockDto,
   SectionDto,
   TextDto,
 } from "./model";
 import { ok, type Result, validationError } from "./result";
-
-export type CmsPageData =
-  | PageData
-  | HomePageData
-  | EventData
-  | NewsData
-  | ContactData;
 
 // Runtime guards ------------------------------------------------------
 
@@ -697,63 +680,6 @@ function section(
   });
 }
 
-const dynamicZoneParsers: Record<
-  string,
-  (
-    value: unknown,
-    path: string,
-    problems: string[],
-  ) => DynamicZoneDto | undefined
-> = {
-  "shared.hero": hero,
-  "shared.section": section,
-};
-
-function dynamicZoneEntry(
-  value: unknown,
-  path: string,
-  problems: string[],
-): DynamicZoneDto | undefined {
-  const node = record(value);
-  if (!node) {
-    problems.push(`expected object at ${path}`);
-    return undefined;
-  }
-  const component = requiredString(node, "__component", path, problems);
-  if (component === undefined) {
-    return undefined;
-  }
-  const parser = dynamicZoneParsers[component];
-  if (!parser) {
-    problems.push(
-      `unsupported dynamic zone component "${component}" at ${path}`,
-    );
-    return undefined;
-  }
-  return parser(node, path, problems);
-}
-
-function dynamicZone(
-  value: unknown,
-  path: string,
-  problems: string[],
-): DynamicZoneDto[] | undefined {
-  const raw = array(value);
-  if (!raw) {
-    problems.push(`expected array at ${path}`);
-    return undefined;
-  }
-  const parsed: DynamicZoneDto[] = [];
-  for (let i = 0; i < raw.length; i++) {
-    const entry = dynamicZoneEntry(raw[i], `${path}[${i}]`, problems);
-    if (entry === undefined) {
-      return undefined;
-    }
-    parsed.push(entry);
-  }
-  return freezeDeep<DynamicZoneDto[]>(parsed);
-}
-
 function sectionEntries(
   value: unknown,
   path: string,
@@ -798,30 +724,27 @@ function heroEntries(
 
 // Top-level pages -----------------------------------------------------
 
-function page(
+function article(
   value: unknown,
   path: string,
   problems: string[],
-): PageDto | undefined {
+): ArticleDto | undefined {
   const node = record(value);
   if (!node) {
     problems.push(`expected object at ${path}`);
     return undefined;
   }
-  const identityDto =
-    node.identity == null
-      ? undefined
-      : identity(node.identity, `${path}.identity`, problems);
-  if (node.identity != null && identityDto === undefined) {
+  const identityDto = identity(node.identity, `${path}.identity`, problems);
+  if (identityDto === undefined) {
     return undefined;
   }
   const sections = sectionEntries(node.sections, `${path}.sections`, problems);
   if (sections === undefined) {
     return undefined;
   }
-  return freezeDeep<PageDto>({
-    pageType: "page",
-    ...(identityDto !== undefined ? { identity: identityDto } : {}),
+  return freezeDeep<ArticleDto>({
+    pageType: "article",
+    identity: identityDto,
     sections,
   });
 }
@@ -854,11 +777,8 @@ function event(
     problems.push(`expected object at ${path}`);
     return undefined;
   }
-  const identityDto =
-    node.identity == null
-      ? undefined
-      : identity(node.identity, `${path}.identity`, problems);
-  if (node.identity != null && identityDto === undefined) {
+  const identityDto = identity(node.identity, `${path}.identity`, problems);
+  if (identityDto === undefined) {
     return undefined;
   }
   const summary = requiredString(node, "summary", path, problems);
@@ -869,7 +789,7 @@ function event(
   }
   return freezeDeep<EventDto>({
     pageType: "event",
-    ...(identityDto !== undefined ? { identity: identityDto } : {}),
+    identity: identityDto,
     summary,
     ...(when !== undefined ? { when } : {}),
     content,
@@ -886,11 +806,8 @@ function news(
     problems.push(`expected object at ${path}`);
     return undefined;
   }
-  const identityDto =
-    node.identity == null
-      ? undefined
-      : identity(node.identity, `${path}.identity`, problems);
-  if (node.identity != null && identityDto === undefined) {
+  const identityDto = identity(node.identity, `${path}.identity`, problems);
+  if (identityDto === undefined) {
     return undefined;
   }
   const summary = requiredString(node, "summary", path, problems);
@@ -900,98 +817,98 @@ function news(
   }
   return freezeDeep<NewsDto>({
     pageType: "news",
-    ...(identityDto !== undefined ? { identity: identityDto } : {}),
+    identity: identityDto,
     summary,
     content,
   });
 }
 
-function contact(
-  value: unknown,
-  path: string,
-  problems: string[],
-): ContactDto | undefined {
-  const node = record(value);
-  if (!node) {
-    problems.push(`expected object at ${path}`);
-    return undefined;
-  }
-  const name = requiredString(node, "name", path, problems);
-  if (name === undefined) {
-    return undefined;
-  }
-  const email = optionalString(node, "email", path, problems);
-  const address = optionalString(node, "address", path, problems);
-  const extras = optionalString(node, "extras", path, problems);
-  return freezeDeep<ContactDto>({
-    pageType: "contact",
-    name,
-    ...(email !== undefined ? { email } : {}),
-    ...(address !== undefined ? { address } : {}),
-    ...(extras !== undefined ? { extras } : {}),
-  });
-}
-
 // Public mappers ------------------------------------------------------
 
-export function toImageDto(raw: unknown): Result<ImageDto> {
-  return mapResource("image", raw, image);
+export function toArticleDto(
+  raw: ArticleData,
+  mediaBaseUrl: string,
+): Result<ArticleDto> {
+  return normalizeResult(mapResource("article", raw, article), (value) => ({
+    ...value,
+    sections: value.sections.map((entry) =>
+      normalizeSection(entry, mediaBaseUrl),
+    ),
+  }));
 }
 
-export function toBlocksDto(raw: unknown): Result<BlocksDto> {
-  return mapResource("blocks", raw, blocks);
+export function toHomePageDto(
+  raw: HomePageData,
+  mediaBaseUrl: string,
+): Result<HomePageDto> {
+  return normalizeResult(mapResource("home-page", raw, homePage), (value) => ({
+    ...value,
+    content: value.content.map((entry) => normalizeHero(entry, mediaBaseUrl)),
+  }));
 }
 
-export function toIdentityDto(raw: unknown): Result<IdentityDto> {
-  return mapResource("identity", raw, identity);
+export function toEventDto(
+  raw: EventData,
+  mediaBaseUrl: string,
+): Result<EventDto> {
+  return normalizeResult(mapResource("event", raw, event), (value) => ({
+    ...value,
+    content: normalizeBlocks(value.content, mediaBaseUrl),
+  }));
 }
 
-export function toHeroDto(raw: unknown): Result<HeroDto> {
-  return mapResource("hero", raw, hero);
+export function toNewsDto(
+  raw: NewsData,
+  mediaBaseUrl: string,
+): Result<NewsDto> {
+  return normalizeResult(mapResource("news", raw, news), (value) => ({
+    ...value,
+    content: normalizeBlocks(value.content, mediaBaseUrl),
+  }));
 }
 
-export function toSectionDto(raw: unknown): Result<SectionDto> {
-  return mapResource("section", raw, section);
+function normalizeResult<T>(
+  result: Result<T>,
+  normalize: (value: T) => T,
+): Result<T> {
+  return result.ok ? ok(freezeDeep(normalize(result.value))) : result;
 }
 
-export function toDynamicZoneDto(raw: unknown): Result<DynamicZoneDto[]> {
-  return mapResource("dynamic-zone", raw, dynamicZone);
+function normalizeHero(value: HeroDto, mediaBaseUrl: string): HeroDto {
+  return { ...value, visual: normalizeImage(value.visual, mediaBaseUrl) };
 }
 
-export function toPageDto(raw: PageData): Result<PageDto> {
-  return mapResource("page", raw, page);
+function normalizeSection(value: SectionDto, mediaBaseUrl: string): SectionDto {
+  return {
+    ...value,
+    ...(value.hero ? { hero: normalizeImage(value.hero, mediaBaseUrl) } : {}),
+    content: normalizeBlocks(value.content, mediaBaseUrl),
+  };
 }
 
-export function toHomePageDto(raw: HomePageData): Result<HomePageDto> {
-  return mapResource("home-page", raw, homePage);
+function normalizeBlocks(value: BlocksDto, mediaBaseUrl: string): BlocksDto {
+  return value.map((block) =>
+    block.type === "image"
+      ? { ...block, image: normalizeImage(block.image, mediaBaseUrl) }
+      : block,
+  );
 }
 
-export function toEventDto(raw: EventData): Result<EventDto> {
-  return mapResource("event", raw, event);
-}
-
-export function toNewsDto(raw: NewsData): Result<NewsDto> {
-  return mapResource("news", raw, news);
-}
-
-export function toContactDto(raw: ContactData): Result<ContactDto> {
-  return mapResource("contact", raw, contact);
-}
-
-export function toCmsPageDto(
-  raw: CmsPageData,
-  pageType: PageType,
-): Result<CmsPageDto> {
-  switch (pageType) {
-    case "page":
-      return toPageDto(raw as PageData);
-    case "home-page":
-      return toHomePageDto(raw as HomePageData);
-    case "event":
-      return toEventDto(raw as EventData);
-    case "news":
-      return toNewsDto(raw as NewsData);
-    case "contact":
-      return toContactDto(raw as ContactData);
-  }
+function normalizeImage(value: ImageDto, mediaBaseUrl: string): ImageDto {
+  return {
+    ...value,
+    url: new URL(value.url, mediaBaseUrl).href,
+    ...(value.formats
+      ? {
+          formats: Object.fromEntries(
+            Object.entries(value.formats).map(([name, format]) => [
+              name,
+              format
+                ? { ...format, url: new URL(format.url, mediaBaseUrl).href }
+                : format,
+            ]),
+          ),
+        }
+      : {}),
+  };
 }

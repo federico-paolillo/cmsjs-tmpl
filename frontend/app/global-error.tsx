@@ -1,24 +1,15 @@
-"use client"; // Error boundaries must be Client Components
+"use client";
 
-import { Metadata } from "next";
-import { defaultMetadata } from "./meta";
-
-export const metadata: Metadata = {
-  ...defaultMetadata,
-};
-
-export default function GlobalError({
-  error,
-}: {
-  error: Error & { digest?: string };
-}) {
+export default function GlobalError({ retry }: { retry: () => void }) {
   return (
-    // global-error must include html and body tags
-    <html>
-      <body className="bg-black">
+    <html lang="en">
+      <body>
+        <title>Application error</title>
         <main>
-          <h1 className="text-white">Error</h1>
-          <p className="text-red-500">Well...The website failed completely !</p>
+          <h1>Unable to load the site</h1>
+          <button onClick={retry} type="button">
+            Try again
+          </button>
         </main>
       </body>
     </html>

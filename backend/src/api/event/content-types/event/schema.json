@@ -14,7 +14,8 @@
     "identity": {
       "type": "component",
       "component": "identity.slug",
-      "repeatable": false
+      "repeatable": false,
+      "required": true
     },
     "summary": {
       "type": "string",

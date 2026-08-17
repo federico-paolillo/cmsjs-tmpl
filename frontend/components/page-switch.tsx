@@ -1,16 +1,24 @@
-import { CmsPageDto } from "@cmsjs/cms/model";
+import type { CmsPageDto } from "@cmsjs/cms/model";
+import { ArticlePage } from "@cmsjs/components/article-page";
+import { EventPage } from "@cmsjs/components/event-page";
 import { HomePage } from "@cmsjs/components/home-page";
+import { NewsPage } from "@cmsjs/components/news-page";
 
-export interface PageSwitchProps {
-  page: CmsPageDto;
+export function PageSwitch({ page }: { page: CmsPageDto }) {
+  switch (page.pageType) {
+    case "article":
+      return <ArticlePage page={page} />;
+    case "event":
+      return <EventPage page={page} />;
+    case "home-page":
+      return <HomePage page={page} />;
+    case "news":
+      return <NewsPage page={page} />;
+    default:
+      return assertNever(page);
+  }
 }
 
-export function PageSwitch({ page }: PageSwitchProps) {
-  switch (page.pageType) {
-    case "home-page":
-      return <HomePage page={page} />
-    default:
-      throw new Error(`Unknown page '${page.pageType}'. This is important, contact the administrator`);
-  };
-
+function assertNever(value: never): never {
+  throw new Error(`Unknown page: ${JSON.stringify(value)}`);
 }

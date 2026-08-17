@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": false,
+    "outDir": ".test-build"
+  },
+  "include": [
+    "app/refresh/route.ts",
+    "cms/client.ts",
+    "cms/mappers.ts",
+    "cms/model.ts",
+    "cms/result.ts",
+    "tests/**/*.ts"
+  ]
+}
