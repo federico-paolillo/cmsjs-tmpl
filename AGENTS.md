@@ -1,0 +1,131 @@
+# Agent Instructions
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may
+all differ from your training data. Read the relevant guide in
+`node_modules/next/dist/docs/` (resolved from this file's directory; in
+monorepos the `next` package may not be visible from the repo root) before
+writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at
+`node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a
+diff only re-creates the uncommitted change; committing it with your work keeps
+the tree clean.
+
+## Shared Engineering Guidelines
+
+> The word "module" means a cohesive unit of code in the relevant language or
+> framework.
+
+- Prefer established language, framework, and standard-library capabilities over
+  custom implementations. Use modern, idiomatic syntax.
+- Apply SOLID and GRASP where they make responsibilities clearer. A little
+  ceremony is welcome when it visibly produces smaller, more cohesive modules.
+- Keep one module per file unless a module is private or used only by the code
+  declaring it. Do not split cohesive models or private helpers solely by size.
+- Keep endpoint handlers, service wiring, dependency checks, and implementations
+  in concern-specific files or folders; keep composition roots small.
+- Prefer guard clauses, descriptive domain names, and named conditions over
+  dense control flow. Centralize genuinely repeated rules, constants, encoding,
+  and validation in small intention-revealing helpers. Keep sibling paths
+  behaviorally consistent.
+- Refactor when it is necessary to implement or review the story cleanly. Avoid
+  unrelated cleanup unless it is required for canonical validation to pass.
+- At dependency boundaries, distinguish invalid data from unavailability,
+  propagate cancellation, preserve exception causes, keep diagnostics
+  secret-free, and cover changed failure behavior with focused tests.
+- Give each filtering, normalization, validation, and configuration policy one
+  authoritative enforcement owner. Add another enforcement layer only for a
+  distinct trust boundary or independently stated failure mode.
+- For telemetry, application code owns secret filtering, cardinality, and event
+  semantics; telemetry infrastructure owns transport, routing, batching,
+  authentication, and sampling. Do not duplicate application field allowlists
+  downstream without a distinct trust-boundary requirement.
+- This is not an enterprise-grade workflow. Cover the happy path and the most
+  obvious and material failure paths; do not harden against every conceivable
+  edge case.
+- Treat fresh measurement as a blocking acceptance gate only when the SEED
+  explicitly labels it as one and identifies the evidence, environment, and
+  owner. Do not turn general words such as "measure", "prove", or "calibrate"
+  into an unstated hardware or harness requirement.
+- When the SEED authorizes recorded evidence or a conservative provisional
+  default, use it, state the known limitation and recalibration trigger, and do
+  not demand fresh characterization. Stories must distinguish mandatory release
+  gates from provisional defaults and post-release triggers.
+
+## Verification Guidelines
+
+- Do not hand off validated work until all applicable canonical validation
+  passes without errors.
+- Unit tests start no external processes. Integration tests may provision
+  task-owned dependency containers and must not require a prestarted project
+  stack, a fixed shared Compose project, or a fixed host port.
+- Automated tests are limited to unit and integration tests. Do not create or
+  demand smoke, end-to-end, browser end-to-end, or deployment tests.
+- Native configuration rendering, image building, and release-archive assembly
+  are build validation, not smoke or deployment tests. Prefer a tool's native
+  parser, renderer, compiler, or build command. Add a bespoke structural
+  validator only when native tooling cannot prove a required invariant.
+- Test each behavior once at the lowest stable boundary that can prove it. Add a
+  cross-boundary integration test only when behavior can fail despite the
+  lower-level check, such as serialization compatibility, dependency semantics,
+  or framework wiring.
+- Require negative-path coverage for trust boundaries, security rules,
+  cancellation and concurrency, atomic data replacement, data-loss risks, and
+  previously observed regressions. Do not require a test for every branch,
+  defensive condition, or log call.
+- Log prose is not an API. Test exact text only when the wording is itself a
+  stable filtering or operator contract. Otherwise test severity, event
+  identity, required fields, forbidden sensitive fields, and cardinality with
+  one representative event per policy class.
+- Do not reproduce the same assertion across unit, integration, image,
+  configuration, script, and documentation checks merely for reassurance. Reuse
+  an existing test at the owning boundary and delete redundant checks when a
+  stronger authoritative check supersedes them.
+- Do not introduce a test seam, interface, fake, fixture family, or helper whose
+  complexity exceeds the behavior it verifies.
+- Test volume, branch count, mutation survival, and assertion count are not
+  goals. Validation ends when the story's observable acceptance criteria and
+  material regression risks are covered.
+
+## Documentation and Comment Guidelines
+
+- First make production code explain itself through precise names, explicit
+  types, cohesive structure, ordinary control flow, and established idioms.
+- Add a concise inline comment only when important reasoning cannot be recovered
+  quickly from the code: a non-obvious invariant, security or compatibility
+  constraint, protocol ownership, calibrated limit, or why a simpler-looking
+  implementation is incorrect.
+- Do not require file, module, function, or test comments merely for coverage.
+  Do not narrate names or create a Markdown document instead of clarifying the
+  code. Prefer a precise comment beside the constrained mechanism.
+- Keep README content to project purpose, expected environment variables and
+  their contract, and non-obvious operator constraints. Do not teach standard
+  Docker, Compose, shell, Git, or service-lifecycle commands, and do not narrate
+  implementation details.
+- Do not create separate feature, developer, implementation, test, or
+  architecture documents unless the SEED explicitly requires one. Encode
+  behavior in code and focused tests; explain remaining non-obvious reasoning
+  inline.
+
+## Runtime and Container Safety
+
+- Use ports in the range 65100-65199 for Docker Compose, Docker containers, and
+  services in general.
+- Bind every published Docker or Compose port explicitly to `127.0.0.1`.
+- Test-only containers may use dependency-native container ports and
+  Docker-assigned ephemeral host ports, but every published test port must bind
+  explicitly to `127.0.0.1`.
+- Never require `sudo`, privileged containers, firewall changes, or a shared
+  prestarted dependency.
+- Harden images made by the project as rootless and distroless with read-only
+  filesystems. Do not impose project-owned hardening on third-party images.
+
+## Strapi 5
+
+- Before changing content types in Strapi 5 request explicit user confirmation
+  unless it was given in advance in the prompt.
+- Do not produce or request any type of tests for the Strapi 5 backend. The
+  proper verification for the Strapi 5 backend is simply that it starts properly
+  from an empty database.

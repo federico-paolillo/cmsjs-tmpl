@@ -671,7 +671,10 @@ export interface components {
       createdAt?: string;
       /** @description A datetime field */
       updatedAt?: string;
-      /** @description A datetime field */
+      /**
+       * @description A datetime field
+       * @default 2026-08-18T16:49:17.915Z
+       */
       publishedAt: string;
       related: unknown;
     };
@@ -756,7 +759,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.912Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -831,7 +837,10 @@ export interface operations {
       content: {
         "application/json": {
           data: {
-            /** @description A datetime field */
+            /**
+             * @description A datetime field
+             * @default 2026-08-18T16:49:17.917Z
+             */
             publishedAt: string;
             /** @description A component field */
             identity: unknown;
@@ -860,7 +869,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.917Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -965,7 +977,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.916Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -1042,7 +1057,10 @@ export interface operations {
       content: {
         "application/json": {
           data: {
-            /** @description A datetime field */
+            /**
+             * @description A datetime field
+             * @default 2026-08-18T16:49:17.917Z
+             */
             publishedAt?: string;
             /** @description A component field */
             identity?: unknown;
@@ -1071,7 +1089,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.918Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -1167,7 +1188,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.918Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -1300,7 +1324,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.920Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -1383,7 +1410,10 @@ export interface operations {
             content: unknown[];
             /** @description A date field */
             when?: string;
-            /** @description A datetime field */
+            /**
+             * @description A datetime field
+             * @default 2026-08-18T16:49:17.921Z
+             */
             publishedAt: string;
             /** @description A component field */
             identity: unknown;
@@ -1416,7 +1446,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.921Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -1543,7 +1576,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.920Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -1628,7 +1664,10 @@ export interface operations {
             content?: unknown[];
             /** @description A date field */
             when?: string;
-            /** @description A datetime field */
+            /**
+             * @description A datetime field
+             * @default 2026-08-18T16:49:17.921Z
+             */
             publishedAt?: string;
             /** @description A component field */
             identity?: unknown;
@@ -1661,7 +1700,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.922Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -1765,7 +1807,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.922Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -1845,7 +1890,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.923Z
+               */
               publishedAt: string;
               /** @description A component field */
               content: components["schemas"]["SharedHeroEntry"][];
@@ -1906,7 +1954,10 @@ export interface operations {
           data: {
             /** @description A string field */
             title?: string;
-            /** @description A datetime field */
+            /**
+             * @description A datetime field
+             * @default 2026-08-18T16:49:17.924Z
+             */
             publishedAt?: string;
             /** @description A component field */
             content?: unknown[];
@@ -1935,7 +1986,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.924Z
+               */
               publishedAt: string;
               /** @description A component field */
               content: components["schemas"]["SharedHeroEntry"][];
@@ -2012,7 +2066,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.924Z
+               */
               publishedAt: string;
               /** @description A component field */
               content: components["schemas"]["SharedHeroEntry"][];
@@ -2132,7 +2189,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.925Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -2212,7 +2272,10 @@ export interface operations {
             summary: string;
             /** @description A blocks field */
             content: unknown[];
-            /** @description A datetime field */
+            /**
+             * @description A datetime field
+             * @default 2026-08-18T16:49:17.930Z
+             */
             publishedAt: string;
             /** @description A component field */
             identity: unknown;
@@ -2243,7 +2306,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.930Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -2359,7 +2425,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.929Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -2441,7 +2510,10 @@ export interface operations {
             summary?: string;
             /** @description A blocks field */
             content?: unknown[];
-            /** @description A datetime field */
+            /**
+             * @description A datetime field
+             * @default 2026-08-18T16:49:17.930Z
+             */
             publishedAt?: string;
             /** @description A component field */
             identity?: unknown;
@@ -2472,7 +2544,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.930Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];
@@ -2573,7 +2648,10 @@ export interface operations {
               createdAt?: string;
               /** @description A datetime field */
               updatedAt?: string;
-              /** @description A datetime field */
+              /**
+               * @description A datetime field
+               * @default 2026-08-18T16:49:17.931Z
+               */
               publishedAt: string;
               /** @description A component field */
               identity: components["schemas"]["IdentitySlugEntry"];

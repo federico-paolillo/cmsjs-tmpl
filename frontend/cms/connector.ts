@@ -1,9 +1,19 @@
 // Glue between the raw Strapi client and the frontend-oriented DTOs.
 
-import type { CmsClient } from "./client";
-import { toArticleDto, toEventDto, toHomePageDto, toNewsDto } from "./mappers";
-import type { ArticleDto, EventDto, HomePageDto, NewsDto } from "./model";
-import type { Result } from "./result";
+import type { CmsClient } from "@cmsjs/cms/client";
+import {
+  toArticleDto,
+  toEventDto,
+  toHomePageDto,
+  toNewsDto,
+} from "@cmsjs/cms/mappers";
+import type {
+  ArticleDto,
+  EventDto,
+  HomePageDto,
+  NewsDto,
+} from "@cmsjs/cms/model";
+import type { Result } from "@cmsjs/cms/result";
 
 export interface CmsConnector {
   getArticleBySlug(slug: string): Promise<Result<ArticleDto>>;
@@ -42,5 +52,10 @@ async function mapSingle<T, D>(
   map: (value: T) => Result<D>,
 ): Promise<Result<D>> {
   const result = await resultPromise;
-  return result.ok ? map(result.value) : result;
+
+  if (result.ok) {
+    return map(result.value);
+  }
+
+  return result;
 }

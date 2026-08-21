@@ -1,6 +1,12 @@
 // A set of Strapi 5 Data Model to @cmsjs-tmpl functions that map the Strapi 5 model to ours
+// This is LLM-generated.
 
-import type { ArticleData, EventData, HomePageData, NewsData } from "./client";
+import type {
+  ArticleData,
+  EventData,
+  HomePageData,
+  NewsData,
+} from "@cmsjs/cms/client";
 import type {
   ArticleDto,
   BlockDto,
@@ -23,10 +29,8 @@ import type {
   QuoteBlockDto,
   SectionDto,
   TextDto,
-} from "./model";
-import { ok, type Result, validationError } from "./result";
-
-// Runtime guards ------------------------------------------------------
+} from "@cmsjs/cms/model";
+import { ok, type Result, validationError } from "@cmsjs/cms/result";
 
 function record(value: unknown): Record<string, unknown> | undefined {
   return typeof value === "object" && value !== null && !Array.isArray(value)
@@ -117,8 +121,6 @@ function optionalBoolean(
   return value;
 }
 
-// Frozen POJO construction --------------------------------------------
-
 function freezeDeep<T>(value: T): T {
   if (value === null || typeof value !== "object") {
     return value;
@@ -148,8 +150,6 @@ function mapResource<T>(
   }
   return ok(parsed);
 }
-
-// Media ---------------------------------------------------------------
 
 function imageFormat(
   value: unknown,
@@ -228,8 +228,6 @@ function image(
     ...(formats !== undefined ? { formats } : {}),
   });
 }
-
-// Blocks --------------------------------------------------------------
 
 function withMarks(
   node: Record<string, unknown>,
@@ -606,8 +604,6 @@ function blocks(
   return freezeDeep<BlocksDto>(parsed);
 }
 
-// Strapi components ---------------------------------------------------
-
 function identity(
   value: unknown,
   path: string,
@@ -722,8 +718,6 @@ function heroEntries(
   return freezeDeep<HeroDto[]>(parsed);
 }
 
-// Top-level pages -----------------------------------------------------
-
 function article(
   value: unknown,
   path: string,
@@ -822,8 +816,6 @@ function news(
     content,
   });
 }
-
-// Public mappers ------------------------------------------------------
 
 export function toArticleDto(
   raw: ArticleData,

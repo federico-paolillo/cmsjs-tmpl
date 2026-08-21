@@ -2,19 +2,18 @@
   "name": "backend",
   "version": "0.1.0",
   "private": true,
-  "description": "A Strapi application",
+  "description": "A Strapi 5 application",
   "scripts": {
-    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
-    "build": "npm run clean && strapi build",
+    "build": "strapi build",
     "console": "strapi console",
     "deploy": "strapi deploy",
     "dev": "strapi develop",
-    "develop": "strapi develop",
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
-    "openapi": "npm run clean && strapi ts:generate-types --silent && strapi openapi generate --output ../cms-api.json && node scripts/normalize-openapi.mjs"
+    "types": "strapi ts:generate-type",
+    "openapi": "strapi openapi generate --output ../frontend/cms/schema.json"
   },
   "dependencies": {
     "@strapi/database": "5.52.0",

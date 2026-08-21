@@ -15,10 +15,6 @@ export function PageSwitch({ page }: { page: CmsPageDto }) {
     case "news":
       return <NewsPage page={page} />;
     default:
-      return assertNever(page);
+      return <></>;
   }
-}
-
-function assertNever(value: never): never {
-  throw new Error(`Unknown page: ${JSON.stringify(value)}`);
 }

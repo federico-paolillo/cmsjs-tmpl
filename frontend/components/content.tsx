@@ -16,7 +16,7 @@ export function Hero({ hero }: { hero: HeroDto }) {
     <section>
       <h2>{hero.headline}</h2>
       {hero.subheading && <p>{hero.subheading}</p>}
-      <CmsImage image={hero.visual} />
+      <CmsImage loading="eager" image={hero.visual} />
       {hero.cta && <p>{hero.cta}</p>}
     </section>
   );
@@ -133,13 +133,14 @@ function Text({ text }: { text: TextDto }) {
   return content;
 }
 
-function CmsImage({ image }: { image: ImageDto }) {
+function CmsImage({ image, loading }: { image: ImageDto, loading?: "eager" | "lazy" | undefined }) {
   return (
     <Image
       alt={image.alt}
       height={image.height}
       src={image.url}
       width={image.width}
+      loading={loading}
     />
   );
 }

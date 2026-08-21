@@ -1,21 +1,25 @@
 import type { NextConfig } from "next";
 
-const mediaUrl = new URL(
-  process.env.CMS_MEDIA_URL ?? process.env.CMS_URL ?? "http://127.0.0.1:1337",
-);
-if (mediaUrl.protocol !== "http:" && mediaUrl.protocol !== "https:") {
-  throw new Error("CMS_MEDIA_URL must use http or https");
+const rawMediaUrl = process.env.CMS_MEDIA_URL;
+
+if (!rawMediaUrl) {
+  throw new Error(`Env. var. 'CMS_MEDIA_URL' is not set`);
 }
-const protocol = mediaUrl.protocol.slice(0, -1) as "http" | "https";
+
+const mediaUrl = new URL(rawMediaUrl);
+
+const protocolWithoutColon = mediaUrl.protocol.slice(0, -1) as "http" | "https";
+const canWeDangerouslyAllowLocalIPs = process.env.NODE_ENV === "development";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   typedRoutes: true,
   images: {
+    dangerouslyAllowLocalIP: canWeDangerouslyAllowLocalIPs,
     remotePatterns: [
       {
-        protocol,
+        protocol: protocolWithoutColon,
         hostname: mediaUrl.hostname,
         port: mediaUrl.port,
         pathname: "/**",

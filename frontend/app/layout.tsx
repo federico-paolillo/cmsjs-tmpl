@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { defaultMetadata } from "./meta";
+import "@cmsjs/app/globals.css";
+import { defaultMetadata } from "@cmsjs/app/meta";
 
 export const metadata: Metadata = {
   ...defaultMetadata,

@@ -1,3 +1,4 @@
+import { contentCacheProfile } from "@cmsjs/cms/cache";
 import type {
   ArticleDto,
   EventDto,
@@ -5,45 +6,63 @@ import type {
   NewsDto,
 } from "@cmsjs/cms/model";
 import type { Result } from "@cmsjs/cms/result";
-import { getDeps } from "@cmsjs/deps";
+import { deps } from "@cmsjs/deps";
 import { cacheLife, cacheTag } from "next/cache";
 
 export async function getArticleBySlug(
   slug: string,
 ): Promise<ArticleDto | null> {
   "use cache";
-  cacheLife("days");
+
+  cacheLife(contentCacheProfile);
   cacheTag("articles", `article:${slug}`);
-  return valueOrThrow(await getDeps().connector.getArticleBySlug(slug));
+
+  const result = await deps.connector.getArticleBySlug(slug);
+
+  return valueOrThrow(result);
 }
 
 export async function getEventBySlug(slug: string): Promise<EventDto | null> {
   "use cache";
-  cacheLife("days");
+
+  cacheLife(contentCacheProfile);
   cacheTag("events", `event:${slug}`);
-  return valueOrThrow(await getDeps().connector.getEventBySlug(slug));
+
+  const result = await deps.connector.getEventBySlug(slug);
+
+  return valueOrThrow(result);
 }
 
 export async function getNewsBySlug(slug: string): Promise<NewsDto | null> {
   "use cache";
-  cacheLife("days");
+
+  cacheLife(contentCacheProfile);
   cacheTag("news", `news:${slug}`);
-  return valueOrThrow(await getDeps().connector.getNewsBySlug(slug));
+
+  const result = await deps.connector.getNewsBySlug(slug);
+
+  return valueOrThrow(result);
 }
 
 export async function getHomePage(): Promise<HomePageDto | null> {
   "use cache";
-  cacheLife("days");
+
+  cacheLife(contentCacheProfile);
   cacheTag("home-page");
-  return valueOrThrow(await getDeps().connector.getHomePage());
+
+  const result = await deps.connector.getHomePage();
+
+  return valueOrThrow(result);
 }
 
 function valueOrThrow<T>(result: Result<T>): T | null {
   if (result.ok) {
     return result.value;
   }
+
   if (result.problem.kind === "not_found") {
     return null;
   }
+
   throw new Error(result.problem.message, { cause: result.problem });
 }

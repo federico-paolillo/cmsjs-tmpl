@@ -38,19 +38,19 @@ For each selected task:
 1. Inspect the worktree and preserve all pre-existing unrelated changes. Stop if
    overlapping edits cannot be isolated safely.
 2. Derive the task's stable ExecPlan path under `.agents/plans/`. For a queue
-   item, use its complete top-level checkbox label, including its identifier when
-   present; for a direct task, use its derived imperative commit title. Lowercase
-   the source, replace each run outside `a-z` and `0-9` with one hyphen, and trim
-   leading or trailing hyphens. Reuse the existing path when resuming the same
-   task.
+   item, use its complete top-level checkbox label, including its identifier
+   when present; for a direct task, use its derived imperative commit title.
+   Lowercase the source, replace each run outside `a-z` and `0-9` with one
+   hyphen, and trim leading or trailing hyphens. Reuse the existing path when
+   resuming the same task.
 3. Start a fresh session using the configured `planner` agent profile through
    the best available monitorable orchestration mechanism. Give it the complete
    selected task, authoritative inputs, relevant constraints, ExecPlan path, and
    expected `PLAN_READY` handoff.
-4. Review the Planner's ExecPlan and handoff. Approve planning only when the file
-   exists, conforms to `.agents/docs/PLANS.md`, and matches the task's scope,
-   requirements, invariants, risks, and intended validation. Return bounded
-   revisions to the same Planner session.
+4. Review the Planner's ExecPlan and handoff. Approve planning only when the
+   file exists, conforms to `.agents/docs/PLANS.md`, and matches the task's
+   scope, requirements, invariants, risks, and intended validation. Return
+   bounded revisions to the same Planner session.
 5. Cap planning at five rounds unless the user explicitly authorizes another
    cap.
 6. After plan approval, start a fresh session using the configured `worker`
@@ -81,10 +81,10 @@ may update the ExecPlan solely to record the factual stop reason and evidence,
 current progress, required next decision or prerequisite, and the revision note
 required by `.agents/docs/PLANS.md`, but only when that update can be isolated
 safely. This stopped-state bookkeeping does not imply approval or completion and
-does not permit changes to implementation scope, technical decisions,
-validation claims, authoritative requirements, or implementation files. If the
-bookkeeping cannot be isolated, leave the ExecPlan unchanged and report the
-blocker through the existing stopped-workflow path.
+does not permit changes to implementation scope, technical decisions, validation
+claims, authoritative requirements, or implementation files. If the bookkeeping
+cannot be isolated, leave the ExecPlan unchanged and report the blocker through
+the existing stopped-workflow path.
 
 Do not select a later queue item until the current task is approved, recorded,
 committed, and pushed. Stop on its first blocker or exhausted cap and do not

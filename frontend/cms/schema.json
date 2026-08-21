@@ -38,10 +38,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "slug",
-          "title"
-        ],
+        "required": ["slug", "title"],
         "additionalProperties": false,
         "id": "IdentitySlugEntry"
       },
@@ -63,9 +60,7 @@
             "$ref": "#/components/schemas/PluginUploadFileDocument"
           }
         },
-        "required": [
-          "content"
-        ],
+        "required": ["content"],
         "additionalProperties": false,
         "id": "SharedSectionEntry"
       },
@@ -160,6 +155,7 @@
           },
           "publishedAt": {
             "description": "A datetime field",
+            "default": "2026-08-18T16:49:17.915Z",
             "type": "string"
           },
           "related": {}
@@ -200,10 +196,7 @@
             "$ref": "#/components/schemas/PluginUploadFileDocument"
           }
         },
-        "required": [
-          "headline",
-          "visual"
-        ],
+        "required": ["headline", "visual"],
         "additionalProperties": false,
         "id": "SharedHeroEntry"
       }
@@ -230,11 +223,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["createdAt", "updatedAt", "publishedAt"]
               }
             },
             "x-strapi-serialize": "querystring"
@@ -249,11 +238,7 @@
               "type": "object",
               "propertyNames": {
                 "type": "string",
-                "enum": [
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["createdAt", "updatedAt", "publishedAt"]
               },
               "additionalProperties": {}
             },
@@ -339,39 +324,24 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "createdAt",
-                    "updatedAt",
-                    "publishedAt"
-                  ]
+                  "enum": ["createdAt", "updatedAt", "publishedAt"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "createdAt",
-                      "updatedAt",
-                      "publishedAt"
-                    ]
+                    "enum": ["createdAt", "updatedAt", "publishedAt"]
                   }
                 },
                 {
                   "type": "object",
                   "propertyNames": {
                     "type": "string",
-                    "enum": [
-                      "createdAt",
-                      "updatedAt",
-                      "publishedAt"
-                    ]
+                    "enum": ["createdAt", "updatedAt", "publishedAt"]
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -380,18 +350,11 @@
                     "type": "object",
                     "propertyNames": {
                       "type": "string",
-                      "enum": [
-                        "createdAt",
-                        "updatedAt",
-                        "publishedAt"
-                      ]
+                      "enum": ["createdAt", "updatedAt", "publishedAt"]
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -416,20 +379,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity",
-                    "sections"
-                  ]
+                  "enum": ["identity", "sections"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity",
-                      "sections"
-                    ]
+                    "enum": ["identity", "sections"]
                   }
                 }
               ]
@@ -444,10 +401,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -485,10 +439,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -535,6 +486,7 @@
                           },
                           "publishedAt": {
                             "description": "A datetime field",
+                            "default": "2026-08-18T16:49:17.912Z",
                             "type": "string"
                           },
                           "identity": {
@@ -561,9 +513,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -585,9 +535,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "article"
-        ]
+        "tags": ["article"]
       },
       "post": {
         "operationId": "article/post/articles",
@@ -603,11 +551,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["createdAt", "updatedAt", "publishedAt"]
               }
             },
             "x-strapi-serialize": "querystring"
@@ -629,20 +573,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity",
-                    "sections"
-                  ]
+                  "enum": ["identity", "sections"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity",
-                      "sections"
-                    ]
+                    "enum": ["identity", "sections"]
                   }
                 }
               ]
@@ -657,10 +595,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -698,10 +633,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -746,6 +678,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.917Z",
                           "type": "string"
                         },
                         "identity": {
@@ -771,9 +704,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -795,9 +726,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "article"
-        ],
+        "tags": ["article"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -810,6 +739,7 @@
                     "properties": {
                       "publishedAt": {
                         "description": "A datetime field",
+                        "default": "2026-08-18T16:49:17.917Z",
                         "type": "string"
                       },
                       "identity": {
@@ -822,17 +752,11 @@
                         "items": {}
                       }
                     },
-                    "required": [
-                      "publishedAt",
-                      "identity",
-                      "sections"
-                    ],
+                    "required": ["publishedAt", "identity", "sections"],
                     "additionalProperties": false
                   }
                 },
-                "required": [
-                  "data"
-                ],
+                "required": ["data"],
                 "additionalProperties": false
               }
             }
@@ -867,11 +791,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["createdAt", "updatedAt", "publishedAt"]
               }
             },
             "x-strapi-serialize": "querystring"
@@ -893,20 +813,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity",
-                    "sections"
-                  ]
+                  "enum": ["identity", "sections"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity",
-                      "sections"
-                    ]
+                    "enum": ["identity", "sections"]
                   }
                 }
               ]
@@ -923,11 +837,7 @@
               "type": "object",
               "propertyNames": {
                 "type": "string",
-                "enum": [
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["createdAt", "updatedAt", "publishedAt"]
               },
               "additionalProperties": {}
             },
@@ -945,39 +855,24 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": [
-                    "createdAt",
-                    "updatedAt",
-                    "publishedAt"
-                  ]
+                  "enum": ["createdAt", "updatedAt", "publishedAt"]
                 },
                 {
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "createdAt",
-                      "updatedAt",
-                      "publishedAt"
-                    ]
+                    "enum": ["createdAt", "updatedAt", "publishedAt"]
                   }
                 },
                 {
                   "type": "object",
                   "propertyNames": {
                     "type": "string",
-                    "enum": [
-                      "createdAt",
-                      "updatedAt",
-                      "publishedAt"
-                    ]
+                    "enum": ["createdAt", "updatedAt", "publishedAt"]
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -986,18 +881,11 @@
                     "type": "object",
                     "propertyNames": {
                       "type": "string",
-                      "enum": [
-                        "createdAt",
-                        "updatedAt",
-                        "publishedAt"
-                      ]
+                      "enum": ["createdAt", "updatedAt", "publishedAt"]
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -1013,10 +901,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -1054,10 +939,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -1102,6 +984,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.916Z",
                           "type": "string"
                         },
                         "identity": {
@@ -1127,9 +1010,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -1151,9 +1032,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "article"
-        ]
+        "tags": ["article"]
       },
       "put": {
         "operationId": "article/put/articles_by_id",
@@ -1181,11 +1060,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["createdAt", "updatedAt", "publishedAt"]
               }
             },
             "x-strapi-serialize": "querystring"
@@ -1207,20 +1082,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity",
-                    "sections"
-                  ]
+                  "enum": ["identity", "sections"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity",
-                      "sections"
-                    ]
+                    "enum": ["identity", "sections"]
                   }
                 }
               ]
@@ -1235,10 +1104,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -1276,10 +1142,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -1324,6 +1187,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.918Z",
                           "type": "string"
                         },
                         "identity": {
@@ -1349,9 +1213,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -1373,9 +1235,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "article"
-        ],
+        "tags": ["article"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1388,6 +1248,7 @@
                     "properties": {
                       "publishedAt": {
                         "description": "A datetime field",
+                        "default": "2026-08-18T16:49:17.917Z",
                         "type": "string"
                       },
                       "identity": {
@@ -1403,9 +1264,7 @@
                     "additionalProperties": false
                   }
                 },
-                "required": [
-                  "data"
-                ],
+                "required": ["data"],
                 "additionalProperties": false
               }
             }
@@ -1438,11 +1297,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["createdAt", "updatedAt", "publishedAt"]
               }
             },
             "x-strapi-serialize": "querystring"
@@ -1464,20 +1319,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity",
-                    "sections"
-                  ]
+                  "enum": ["identity", "sections"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity",
-                      "sections"
-                    ]
+                    "enum": ["identity", "sections"]
                   }
                 }
               ]
@@ -1494,11 +1343,7 @@
               "type": "object",
               "propertyNames": {
                 "type": "string",
-                "enum": [
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["createdAt", "updatedAt", "publishedAt"]
               },
               "additionalProperties": {}
             },
@@ -1514,10 +1359,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -1555,10 +1397,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -1603,6 +1442,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.918Z",
                           "type": "string"
                         },
                         "identity": {
@@ -1628,9 +1468,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -1652,9 +1490,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "article"
-        ]
+        "tags": ["article"]
       }
     },
     "/events": {
@@ -1825,10 +1661,7 @@
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -1848,10 +1681,7 @@
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -1876,18 +1706,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -1902,10 +1728,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -1943,10 +1766,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -2006,6 +1826,7 @@
                           },
                           "publishedAt": {
                             "description": "A datetime field",
+                            "default": "2026-08-18T16:49:17.920Z",
                             "type": "string"
                           },
                           "identity": {
@@ -2025,9 +1846,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -2049,9 +1868,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "event"
-        ]
+        "tags": ["event"]
       },
       "post": {
         "operationId": "event/post/events",
@@ -2096,18 +1913,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -2122,10 +1935,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -2163,10 +1973,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -2224,6 +2031,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.921Z",
                           "type": "string"
                         },
                         "identity": {
@@ -2242,9 +2050,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -2266,9 +2072,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "event"
-        ],
+        "tags": ["event"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2294,6 +2098,7 @@
                       },
                       "publishedAt": {
                         "description": "A datetime field",
+                        "default": "2026-08-18T16:49:17.921Z",
                         "type": "string"
                       },
                       "identity": {
@@ -2309,9 +2114,7 @@
                     "additionalProperties": false
                   }
                 },
-                "required": [
-                  "data"
-                ],
+                "required": ["data"],
                 "additionalProperties": false
               }
             }
@@ -2375,18 +2178,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -2466,10 +2265,7 @@
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -2489,10 +2285,7 @@
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -2508,10 +2301,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -2549,10 +2339,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -2610,6 +2397,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.920Z",
                           "type": "string"
                         },
                         "identity": {
@@ -2628,9 +2416,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -2652,9 +2438,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "event"
-        ]
+        "tags": ["event"]
       },
       "put": {
         "operationId": "event/put/events_by_id",
@@ -2711,18 +2495,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -2737,10 +2517,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -2778,10 +2555,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -2839,6 +2613,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.922Z",
                           "type": "string"
                         },
                         "identity": {
@@ -2857,9 +2632,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -2881,9 +2654,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "event"
-        ],
+        "tags": ["event"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2909,6 +2680,7 @@
                       },
                       "publishedAt": {
                         "description": "A datetime field",
+                        "default": "2026-08-18T16:49:17.921Z",
                         "type": "string"
                       },
                       "identity": {
@@ -2918,9 +2690,7 @@
                     "additionalProperties": false
                   }
                 },
-                "required": [
-                  "data"
-                ],
+                "required": ["data"],
                 "additionalProperties": false
               }
             }
@@ -2982,18 +2752,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -3033,10 +2799,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -3074,10 +2837,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -3135,6 +2895,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.922Z",
                           "type": "string"
                         },
                         "identity": {
@@ -3153,9 +2914,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -3177,9 +2936,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "event"
-        ]
+        "tags": ["event"]
       }
     },
     "/home-page": {
@@ -3197,12 +2954,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "title",
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["title", "createdAt", "updatedAt", "publishedAt"]
               }
             },
             "x-strapi-serialize": "querystring"
@@ -3224,18 +2976,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "content"
-                  ]
+                  "enum": ["content"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "content"
-                    ]
+                    "enum": ["content"]
                   }
                 }
               ]
@@ -3252,12 +3000,7 @@
               "type": "object",
               "propertyNames": {
                 "type": "string",
-                "enum": [
-                  "title",
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["title", "createdAt", "updatedAt", "publishedAt"]
               },
               "additionalProperties": {}
             },
@@ -3308,6 +3051,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.923Z",
                           "type": "string"
                         },
                         "content": {
@@ -3328,9 +3072,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -3352,9 +3094,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "home-page"
-        ]
+        "tags": ["home-page"]
       },
       "put": {
         "operationId": "home-page/put/home_page",
@@ -3370,12 +3110,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "title",
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["title", "createdAt", "updatedAt", "publishedAt"]
               }
             },
             "x-strapi-serialize": "querystring"
@@ -3397,18 +3132,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "content"
-                  ]
+                  "enum": ["content"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "content"
-                    ]
+                    "enum": ["content"]
                   }
                 }
               ]
@@ -3458,6 +3189,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.924Z",
                           "type": "string"
                         },
                         "content": {
@@ -3478,9 +3210,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -3502,9 +3232,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "home-page"
-        ],
+        "tags": ["home-page"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -3521,6 +3249,7 @@
                       },
                       "publishedAt": {
                         "description": "A datetime field",
+                        "default": "2026-08-18T16:49:17.924Z",
                         "type": "string"
                       },
                       "content": {
@@ -3532,9 +3261,7 @@
                     "additionalProperties": false
                   }
                 },
-                "required": [
-                  "data"
-                ],
+                "required": ["data"],
                 "additionalProperties": false
               }
             }
@@ -3555,12 +3282,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "title",
-                  "createdAt",
-                  "updatedAt",
-                  "publishedAt"
-                ]
+                "enum": ["title", "createdAt", "updatedAt", "publishedAt"]
               }
             },
             "x-strapi-serialize": "querystring"
@@ -3582,18 +3304,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "content"
-                  ]
+                  "enum": ["content"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "content"
-                    ]
+                    "enum": ["content"]
                   }
                 }
               ]
@@ -3643,6 +3361,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.924Z",
                           "type": "string"
                         },
                         "content": {
@@ -3663,9 +3382,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -3687,9 +3404,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "home-page"
-        ]
+        "tags": ["home-page"]
       }
     },
     "/news": {
@@ -3855,10 +3570,7 @@
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -3877,10 +3589,7 @@
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -3905,18 +3614,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -3931,10 +3636,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -3972,10 +3674,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -4031,6 +3730,7 @@
                           },
                           "publishedAt": {
                             "description": "A datetime field",
+                            "default": "2026-08-18T16:49:17.925Z",
                             "type": "string"
                           },
                           "identity": {
@@ -4050,9 +3750,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -4074,9 +3772,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "news-item"
-        ]
+        "tags": ["news-item"]
       },
       "post": {
         "operationId": "news-item/post/news",
@@ -4120,18 +3816,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -4146,10 +3838,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -4187,10 +3876,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -4244,6 +3930,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.930Z",
                           "type": "string"
                         },
                         "identity": {
@@ -4262,9 +3949,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -4286,9 +3971,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "news-item"
-        ],
+        "tags": ["news-item"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -4310,6 +3993,7 @@
                       },
                       "publishedAt": {
                         "description": "A datetime field",
+                        "default": "2026-08-18T16:49:17.930Z",
                         "type": "string"
                       },
                       "identity": {
@@ -4325,9 +4009,7 @@
                     "additionalProperties": false
                   }
                 },
-                "required": [
-                  "data"
-                ],
+                "required": ["data"],
                 "additionalProperties": false
               }
             }
@@ -4390,18 +4072,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -4477,10 +4155,7 @@
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -4499,10 +4174,7 @@
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -4518,10 +4190,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -4559,10 +4228,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -4616,6 +4282,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.929Z",
                           "type": "string"
                         },
                         "identity": {
@@ -4634,9 +4301,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -4658,9 +4323,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "news-item"
-        ]
+        "tags": ["news-item"]
       },
       "put": {
         "operationId": "news-item/put/news_by_id",
@@ -4716,18 +4379,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -4742,10 +4401,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -4783,10 +4439,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -4840,6 +4493,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.930Z",
                           "type": "string"
                         },
                         "identity": {
@@ -4858,9 +4512,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -4882,9 +4534,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "news-item"
-        ],
+        "tags": ["news-item"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -4906,6 +4556,7 @@
                       },
                       "publishedAt": {
                         "description": "A datetime field",
+                        "default": "2026-08-18T16:49:17.930Z",
                         "type": "string"
                       },
                       "identity": {
@@ -4915,9 +4566,7 @@
                     "additionalProperties": false
                   }
                 },
-                "required": [
-                  "data"
-                ],
+                "required": ["data"],
                 "additionalProperties": false
               }
             }
@@ -4978,18 +4627,14 @@
                   "description": "Populate a single relation, component, file, or dynamic zone",
                   "readOnly": true,
                   "type": "string",
-                  "enum": [
-                    "identity"
-                  ]
+                  "enum": ["identity"]
                 },
                 {
                   "description": "Populate a selection of multiple relations, components, files, or dynamic zones",
                   "type": "array",
                   "items": {
                     "type": "string",
-                    "enum": [
-                      "identity"
-                    ]
+                    "enum": ["identity"]
                   }
                 }
               ]
@@ -5028,10 +4673,7 @@
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Fetch documents based on their status. Default to \"published\" if not specified.",
               "type": "string",
-              "enum": [
-                "draft",
-                "published"
-              ]
+              "enum": ["draft", "published"]
             },
             "x-strapi-serialize": "querystring"
           },
@@ -5069,10 +4711,7 @@
                 },
                 {
                   "type": "string",
-                  "enum": [
-                    "true",
-                    "false"
-                  ]
+                  "enum": ["true", "false"]
                 }
               ]
             },
@@ -5126,6 +4765,7 @@
                         },
                         "publishedAt": {
                           "description": "A datetime field",
+                          "default": "2026-08-18T16:49:17.931Z",
                           "type": "string"
                         },
                         "identity": {
@@ -5144,9 +4784,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -5168,9 +4806,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "news-item"
-        ]
+        "tags": ["news-item"]
       }
     },
     "/content-type-builder/content-types": {
@@ -5184,10 +4820,7 @@
             "schema": {
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "type": "string",
-              "enum": [
-                "collectionType",
-                "singleType"
-              ]
+              "enum": ["collectionType", "singleType"]
             },
             "x-strapi-serialize": "querystring"
           }
@@ -5236,10 +4869,7 @@
                               },
                               "kind": {
                                 "type": "string",
-                                "enum": [
-                                  "collectionType",
-                                  "singleType"
-                                ]
+                                "enum": ["collectionType", "singleType"]
                               },
                               "collectionName": {
                                 "type": "string"
@@ -5285,10 +4915,7 @@
                                           }
                                         }
                                       },
-                                      "required": [
-                                        "type",
-                                        "multiple"
-                                      ],
+                                      "required": ["type", "multiple"],
                                       "additionalProperties": false
                                     },
                                     {
@@ -5429,10 +5056,7 @@
                                           "type": "number"
                                         }
                                       },
-                                      "required": [
-                                        "type",
-                                        "components"
-                                      ],
+                                      "required": ["type", "components"],
                                       "additionalProperties": false
                                     },
                                     {
@@ -5460,9 +5084,7 @@
                                           "type": "string"
                                         }
                                       },
-                                      "required": [
-                                        "type"
-                                      ],
+                                      "required": ["type"],
                                       "additionalProperties": false
                                     },
                                     {
@@ -5527,9 +5149,7 @@
                                           "additionalProperties": {}
                                         }
                                       },
-                                      "required": [
-                                        "type"
-                                      ],
+                                      "required": ["type"],
                                       "additionalProperties": false
                                     }
                                   ]
@@ -5592,18 +5212,12 @@
                             "additionalProperties": false
                           }
                         },
-                        "required": [
-                          "uid",
-                          "apiID",
-                          "schema"
-                        ],
+                        "required": ["uid", "apiID", "schema"],
                         "additionalProperties": false
                       }
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -5625,9 +5239,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "content-type-builder"
-        ]
+        "tags": ["content-type-builder"]
       }
     },
     "/content-type-builder/content-types/{uid}": {
@@ -5687,10 +5299,7 @@
                             },
                             "kind": {
                               "type": "string",
-                              "enum": [
-                                "collectionType",
-                                "singleType"
-                              ]
+                              "enum": ["collectionType", "singleType"]
                             },
                             "collectionName": {
                               "type": "string"
@@ -5736,10 +5345,7 @@
                                         }
                                       }
                                     },
-                                    "required": [
-                                      "type",
-                                      "multiple"
-                                    ],
+                                    "required": ["type", "multiple"],
                                     "additionalProperties": false
                                   },
                                   {
@@ -5880,10 +5486,7 @@
                                         "type": "number"
                                       }
                                     },
-                                    "required": [
-                                      "type",
-                                      "components"
-                                    ],
+                                    "required": ["type", "components"],
                                     "additionalProperties": false
                                   },
                                   {
@@ -5911,9 +5514,7 @@
                                         "type": "string"
                                       }
                                     },
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "additionalProperties": false
                                   },
                                   {
@@ -5978,9 +5579,7 @@
                                         "additionalProperties": {}
                                       }
                                     },
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "additionalProperties": false
                                   }
                                 ]
@@ -6043,17 +5642,11 @@
                           "additionalProperties": false
                         }
                       },
-                      "required": [
-                        "uid",
-                        "apiID",
-                        "schema"
-                      ],
+                      "required": ["uid", "apiID", "schema"],
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -6075,9 +5668,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "content-type-builder"
-        ]
+        "tags": ["content-type-builder"]
       }
     },
     "/content-type-builder/components": {
@@ -6167,10 +5758,7 @@
                                           }
                                         }
                                       },
-                                      "required": [
-                                        "type",
-                                        "multiple"
-                                      ],
+                                      "required": ["type", "multiple"],
                                       "additionalProperties": false
                                     },
                                     {
@@ -6311,10 +5899,7 @@
                                           "type": "number"
                                         }
                                       },
-                                      "required": [
-                                        "type",
-                                        "components"
-                                      ],
+                                      "required": ["type", "components"],
                                       "additionalProperties": false
                                     },
                                     {
@@ -6342,9 +5927,7 @@
                                           "type": "string"
                                         }
                                       },
-                                      "required": [
-                                        "type"
-                                      ],
+                                      "required": ["type"],
                                       "additionalProperties": false
                                     },
                                     {
@@ -6409,9 +5992,7 @@
                                           "additionalProperties": {}
                                         }
                                       },
-                                      "required": [
-                                        "type"
-                                      ],
+                                      "required": ["type"],
                                       "additionalProperties": false
                                     }
                                   ]
@@ -6433,19 +6014,12 @@
                             "additionalProperties": false
                           }
                         },
-                        "required": [
-                          "uid",
-                          "category",
-                          "apiId",
-                          "schema"
-                        ],
+                        "required": ["uid", "category", "apiId", "schema"],
                         "additionalProperties": false
                       }
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -6467,9 +6041,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "content-type-builder"
-        ]
+        "tags": ["content-type-builder"]
       }
     },
     "/content-type-builder/components/{uid}": {
@@ -6568,10 +6140,7 @@
                                         }
                                       }
                                     },
-                                    "required": [
-                                      "type",
-                                      "multiple"
-                                    ],
+                                    "required": ["type", "multiple"],
                                     "additionalProperties": false
                                   },
                                   {
@@ -6712,10 +6281,7 @@
                                         "type": "number"
                                       }
                                     },
-                                    "required": [
-                                      "type",
-                                      "components"
-                                    ],
+                                    "required": ["type", "components"],
                                     "additionalProperties": false
                                   },
                                   {
@@ -6743,9 +6309,7 @@
                                         "type": "string"
                                       }
                                     },
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "additionalProperties": false
                                   },
                                   {
@@ -6810,9 +6374,7 @@
                                         "additionalProperties": {}
                                       }
                                     },
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "additionalProperties": false
                                   }
                                 ]
@@ -6834,18 +6396,11 @@
                           "additionalProperties": false
                         }
                       },
-                      "required": [
-                        "uid",
-                        "category",
-                        "apiId",
-                        "schema"
-                      ],
+                      "required": ["uid", "category", "apiId", "schema"],
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data"
-                  ],
+                  "required": ["data"],
                   "additionalProperties": false
                 }
               }
@@ -6867,9 +6422,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "content-type-builder"
-        ]
+        "tags": ["content-type-builder"]
       }
     },
     "/email": {
@@ -6906,9 +6459,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "email"
-        ],
+        "tags": ["email"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -6941,11 +6492,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "to",
-                  "subject",
-                  "text"
-                ],
+                "required": ["to", "subject", "text"],
                 "additionalProperties": {
                   "type": "string"
                 }
@@ -7262,9 +6809,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "upload"
-        ]
+        "tags": ["upload"]
       }
     },
     "/upload/files": {
@@ -7348,10 +6893,7 @@
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -7363,10 +6905,7 @@
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -7607,9 +7146,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "upload"
-        ]
+        "tags": ["upload"]
       }
     },
     "/upload/files/page": {
@@ -7693,10 +7230,7 @@
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -7708,10 +7242,7 @@
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -7965,10 +7496,7 @@
                                   "maximum": 9007199254740991
                                 }
                               },
-                              "required": [
-                                "page",
-                                "pageSize"
-                              ],
+                              "required": ["page", "pageSize"],
                               "additionalProperties": false
                             },
                             {
@@ -7990,25 +7518,17 @@
                                   "maximum": 9007199254740991
                                 }
                               },
-                              "required": [
-                                "start",
-                                "limit"
-                              ],
+                              "required": ["start", "limit"],
                               "additionalProperties": false
                             }
                           ]
                         }
                       },
-                      "required": [
-                        "pagination"
-                      ],
+                      "required": ["pagination"],
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "data",
-                    "meta"
-                  ],
+                  "required": ["data", "meta"],
                   "additionalProperties": false
                 }
               }
@@ -8030,9 +7550,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "upload"
-        ]
+        "tags": ["upload"]
       }
     },
     "/upload/files/{id}": {
@@ -8258,9 +7776,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "upload"
-        ]
+        "tags": ["upload"]
       },
       "delete": {
         "operationId": "upload/delete/upload_files_by_id",
@@ -8431,9 +7947,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "upload"
-        ]
+        "tags": ["upload"]
       }
     },
     "/i18n/locales": {
@@ -8521,9 +8035,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "i18n"
-        ]
+        "tags": ["i18n"]
       }
     },
     "/connect/(.*)": {
@@ -8547,9 +8059,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/auth/local": {
@@ -8666,10 +8176,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "jwt",
-                    "user"
-                  ],
+                  "required": ["jwt", "user"],
                   "additionalProperties": false
                 }
               }
@@ -8691,9 +8198,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -8708,10 +8213,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "identifier",
-                  "password"
-                ],
+                "required": ["identifier", "password"],
                 "additionalProperties": false
               }
             }
@@ -8835,10 +8337,7 @@
                           "additionalProperties": false
                         }
                       },
-                      "required": [
-                        "jwt",
-                        "user"
-                      ],
+                      "required": ["jwt", "user"],
                       "additionalProperties": false
                     },
                     {
@@ -8939,9 +8438,7 @@
                           "additionalProperties": false
                         }
                       },
-                      "required": [
-                        "user"
-                      ],
+                      "required": ["user"],
                       "additionalProperties": false
                     }
                   ]
@@ -8965,9 +8462,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -8987,11 +8482,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "username",
-                  "email",
-                  "password"
-                ],
+                "required": ["username", "email", "password"],
                 "additionalProperties": false
               }
             }
@@ -9123,10 +8614,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "jwt",
-                    "user"
-                  ],
+                  "required": ["jwt", "user"],
                   "additionalProperties": false
                 }
               }
@@ -9148,9 +8636,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/auth/forgot-password": {
@@ -9170,9 +8656,7 @@
                       "type": "boolean"
                     }
                   },
-                  "required": [
-                    "ok"
-                  ],
+                  "required": ["ok"],
                   "additionalProperties": false
                 }
               }
@@ -9194,9 +8678,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -9210,9 +8692,7 @@
                     "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                   }
                 },
-                "required": [
-                  "email"
-                ],
+                "required": ["email"],
                 "additionalProperties": false
               }
             }
@@ -9334,10 +8814,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "jwt",
-                    "user"
-                  ],
+                  "required": ["jwt", "user"],
                   "additionalProperties": false
                 }
               }
@@ -9359,9 +8836,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -9379,11 +8854,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "code",
-                  "password",
-                  "passwordConfirmation"
-                ],
+                "required": ["code", "password", "passwordConfirmation"],
                 "additionalProperties": false
               }
             }
@@ -9412,9 +8883,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/auth/send-email-confirmation": {
@@ -9437,10 +8906,7 @@
                       "type": "boolean"
                     }
                   },
-                  "required": [
-                    "email",
-                    "sent"
-                  ],
+                  "required": ["email", "sent"],
                   "additionalProperties": false
                 }
               }
@@ -9462,9 +8928,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -9478,9 +8942,7 @@
                     "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                   }
                 },
-                "required": [
-                  "email"
-                ],
+                "required": ["email"],
                 "additionalProperties": false
               }
             }
@@ -9602,10 +9064,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "jwt",
-                    "user"
-                  ],
+                  "required": ["jwt", "user"],
                   "additionalProperties": false
                 }
               }
@@ -9627,9 +9086,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -9680,9 +9137,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/auth/logout": {
@@ -9706,9 +9161,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/auth/sessions": {
@@ -9732,9 +9185,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/auth/sessions/{sessionId}": {
@@ -9758,9 +9209,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/users/count": {
@@ -9813,9 +9262,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/users": {
@@ -9899,10 +9346,7 @@
                   },
                   "additionalProperties": {
                     "type": "string",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 },
                 {
@@ -9914,10 +9358,7 @@
                     },
                     "additionalProperties": {
                       "type": "string",
-                      "enum": [
-                        "asc",
-                        "desc"
-                      ]
+                      "enum": ["asc", "desc"]
                     }
                   }
                 }
@@ -10123,9 +9564,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       },
       "post": {
         "operationId": "users-permissions/post/users",
@@ -10249,9 +9688,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -10331,11 +9768,7 @@
                     ]
                   }
                 },
-                "required": [
-                  "username",
-                  "email",
-                  "password"
-                ],
+                "required": ["username", "email", "password"],
                 "additionalProperties": false
               }
             }
@@ -10520,9 +9953,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/users/{id}": {
@@ -10711,9 +10142,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       },
       "put": {
         "operationId": "users-permissions/put/users_by_id",
@@ -10847,9 +10276,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -11067,9 +10494,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/users-permissions/roles/{id}": {
@@ -11160,18 +10585,13 @@
                                         "type": "string"
                                       }
                                     },
-                                    "required": [
-                                      "enabled",
-                                      "policy"
-                                    ],
+                                    "required": ["enabled", "policy"],
                                     "additionalProperties": false
                                   }
                                 }
                               }
                             },
-                            "required": [
-                              "controllers"
-                            ],
+                            "required": ["controllers"],
                             "additionalProperties": false
                           }
                         },
@@ -11193,9 +10613,7 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "role"
-                  ],
+                  "required": ["role"],
                   "additionalProperties": false
                 }
               }
@@ -11217,9 +10635,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/users-permissions/roles": {
@@ -11302,18 +10718,13 @@
                                           "type": "string"
                                         }
                                       },
-                                      "required": [
-                                        "enabled",
-                                        "policy"
-                                      ],
+                                      "required": ["enabled", "policy"],
                                       "additionalProperties": false
                                     }
                                   }
                                 }
                               },
-                              "required": [
-                                "controllers"
-                              ],
+                              "required": ["controllers"],
                               "additionalProperties": false
                             }
                           },
@@ -11336,9 +10747,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "roles"
-                  ],
+                  "required": ["roles"],
                   "additionalProperties": false
                 }
               }
@@ -11360,9 +10769,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       },
       "post": {
         "operationId": "users-permissions/post/users_permissions_roles",
@@ -11380,9 +10787,7 @@
                       "type": "boolean"
                     }
                   },
-                  "required": [
-                    "ok"
-                  ],
+                  "required": ["ok"],
                   "additionalProperties": false
                 }
               }
@@ -11404,9 +10809,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -11431,10 +10834,7 @@
                     "additionalProperties": {}
                   }
                 },
-                "required": [
-                  "name",
-                  "type"
-                ],
+                "required": ["name", "type"],
                 "additionalProperties": false
               }
             }
@@ -11469,9 +10869,7 @@
                       "type": "boolean"
                     }
                   },
-                  "required": [
-                    "ok"
-                  ],
+                  "required": ["ok"],
                   "additionalProperties": false
                 }
               }
@@ -11493,9 +10891,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ],
+        "tags": ["users-permissions"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -11552,9 +10948,7 @@
                       "type": "boolean"
                     }
                   },
-                  "required": [
-                    "ok"
-                  ],
+                  "required": ["ok"],
                   "additionalProperties": false
                 }
               }
@@ -11576,9 +10970,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     },
     "/users-permissions/permissions": {
@@ -11622,25 +11014,18 @@
                                     "type": "string"
                                   }
                                 },
-                                "required": [
-                                  "enabled",
-                                  "policy"
-                                ],
+                                "required": ["enabled", "policy"],
                                 "additionalProperties": false
                               }
                             }
                           }
                         },
-                        "required": [
-                          "controllers"
-                        ],
+                        "required": ["controllers"],
                         "additionalProperties": false
                       }
                     }
                   },
-                  "required": [
-                    "permissions"
-                  ],
+                  "required": ["permissions"],
                   "additionalProperties": false
                 }
               }
@@ -11662,9 +11047,7 @@
             "description": "Internal server error"
           }
         },
-        "tags": [
-          "users-permissions"
-        ]
+        "tags": ["users-permissions"]
       }
     }
   }

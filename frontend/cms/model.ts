@@ -1,7 +1,5 @@
 // High-level, @cmjs-tmpl specific, types. These types isolate us from the raw Strapi 5 data model
 
-// Media -------------------------------------------------------------
-
 export interface ImageFormatDto {
   url: string;
   width: number;
@@ -18,8 +16,6 @@ export interface ImageDto {
   caption?: string;
   formats?: Partial<Record<string, ImageFormatDto>>;
 }
-
-// Blocks ------------------------------------------------------------
 
 export interface TextDto {
   type: "text";
@@ -88,8 +84,6 @@ export type BlockDto =
 
 export type BlocksDto = BlockDto[];
 
-// Strapi components --------------------------------------------------
-
 export interface IdentityDto {
   slug: string;
   title: string;
@@ -109,8 +103,6 @@ export interface SectionDto {
   hero?: ImageDto;
   content: BlocksDto;
 }
-
-// Top-level pages ----------------------------------------------------
 
 export interface ArticleDto {
   pageType: "article";

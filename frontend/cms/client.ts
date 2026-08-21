@@ -1,6 +1,4 @@
-import type { paths } from "@cmsjs/cms/schema";
-import type { Client } from "openapi-fetch";
-import createClient from "openapi-fetch";
+// Raw Strapi 5 client that returns Strapi-specific types
 
 import {
   httpError,
@@ -10,9 +8,10 @@ import {
   parseError,
   type ResourceRef,
   type Result,
-} from "./result";
-
-// Raw Strapi 5 client that returns Strapi-specific types
+} from "@cmsjs/cms/result";
+import type { paths } from "@cmsjs/cms/schema";
+import type { Client } from "openapi-fetch";
+import createClient from "openapi-fetch";
 
 export type ArticleData =
   paths["/articles"]["get"]["responses"][200]["content"]["application/json"]["data"][number];
@@ -33,7 +32,7 @@ export interface CmsClient {
 export function makeCmsClient(
   fetch: typeof globalThis.fetch,
   baseUrl: string,
-  token?: string,
+  token: string | null,
 ): CmsClient {
   const rawClient = createClient<paths>({
     baseUrl,
