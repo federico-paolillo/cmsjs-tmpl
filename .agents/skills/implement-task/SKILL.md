@@ -37,25 +37,54 @@ For each selected task:
 
 1. Inspect the worktree and preserve all pre-existing unrelated changes. Stop if
    overlapping edits cannot be isolated safely.
-2. Start a fresh high-effort Worker role session through the best available
-   monitorable orchestration mechanism. Give it the complete selected task,
-   authoritative inputs, relevant constraints, and the expected `PLAN_READY`
-   handoff.
-3. Review the Worker's plan. Approve it only when it matches the task's scope,
-   requirements, invariants, risks, and intended validation.
-4. Cap planning at five rounds unless the user explicitly authorizes another
+2. Derive the task's stable ExecPlan path under `.agents/plans/`. For a queue
+   item, use its complete top-level checkbox label, including its identifier when
+   present; for a direct task, use its derived imperative commit title. Lowercase
+   the source, replace each run outside `a-z` and `0-9` with one hyphen, and trim
+   leading or trailing hyphens. Reuse the existing path when resuming the same
+   task.
+3. Start a fresh session using the configured `planner` agent profile through
+   the best available monitorable orchestration mechanism. Give it the complete
+   selected task, authoritative inputs, relevant constraints, ExecPlan path, and
+   expected `PLAN_READY` handoff.
+4. Review the Planner's ExecPlan and handoff. Approve planning only when the file
+   exists, conforms to `.agents/docs/PLANS.md`, and matches the task's scope,
+   requirements, invariants, risks, and intended validation. Return bounded
+   revisions to the same Planner session.
+5. Cap planning at five rounds unless the user explicitly authorizes another
    cap.
-5. After plan approval, authorize the same Worker to implement and validate the
-   approved plan.
-6. When the Worker returns `WORK_READY`, start a fresh high-effort Reviewer role
-   session through the selected orchestration mechanism for independent
-   verification of this task and require `REVIEW_READY`.
-7. If the Reviewer reports findings, return them to the same Worker for
+6. After plan approval, start a fresh session using the configured `worker`
+   agent profile. Give it the approved ExecPlan and authorize implementation and
+   validation.
+7. When the Worker returns `WORK_READY`, start a fresh session using the
+   configured `reviewer` agent profile for independent verification of the task,
+   implementation, validation, and ExecPlan accuracy; require `REVIEW_READY`.
+8. If the Reviewer reports findings, return them to the same Worker for
    remediation, then send the resulting `WORK_READY` handoff to the same
    Reviewer.
-8. Repeat remediation and review until the Reviewer approves the task or five
+9. Repeat remediation and review until the Reviewer approves the task or five
    remediation cycles have completed, unless the user explicitly authorizes
    another cap.
+
+Only after the Reviewer returns both `APPROVED` and `REVIEW_READY`, the
+Coordinator may update the task's ExecPlan solely to record the review result
+and evidence, close review-related Progress items, finalize Outcomes &
+Retrospective, and append the revision note required by `.agents/docs/PLANS.md`.
+This bookkeeping authority does not permit changes to implementation scope,
+technical decisions, validation claims, authoritative requirements, or
+implementation files. Any non-bookkeeping change returns to the same Worker and
+Reviewer. A `CHANGES_REQUESTED` handoff follows the remediation flow above and
+does not authorize finalization.
+
+If the workflow stops on `BLOCKED: <reason>` or a push failure, the Coordinator
+may update the ExecPlan solely to record the factual stop reason and evidence,
+current progress, required next decision or prerequisite, and the revision note
+required by `.agents/docs/PLANS.md`, but only when that update can be isolated
+safely. This stopped-state bookkeeping does not imply approval or completion and
+does not permit changes to implementation scope, technical decisions,
+validation claims, authoritative requirements, or implementation files. If the
+bookkeeping cannot be isolated, leave the ExecPlan unchanged and report the
+blocker through the existing stopped-workflow path.
 
 Do not select a later queue item until the current task is approved, recorded,
 committed, and pushed. Stop on its first blocker or exhausted cap and do not
@@ -85,6 +114,10 @@ concurrency, or authorization protocol:
 
 ## Orchestration Discipline
 
+- Run coordination using the configured `coordinator` agent profile and select
+  the configured `planner`, `worker`, and `reviewer` profiles by exact name. Do
+  not suggest or pass model or reasoning-effort overrides when starting them;
+  each profile owns those settings.
 - Give each role session its complete task, constraints, and expected handoff
   marker up front.
 - After starting work or receiving the role's last message, wait at least 20
@@ -103,8 +136,10 @@ concurrency, or authorization protocol:
 
 ## Completion Signals
 
-- Worker handoffs end with exactly `PLAN_READY`, `WORK_READY`, or
-  `BLOCKED: <reason>` on the final line.
+- Planner handoffs end with exactly `PLAN_READY` or `BLOCKED: <reason>` on the
+  final line.
+- Worker handoffs end with exactly `WORK_READY` or `BLOCKED: <reason>` on the
+  final line.
 - Reviewer payloads state exactly `APPROVED` or `CHANGES_REQUESTED` and end with
   exactly `REVIEW_READY`, `DESIGN_READY`, or `BLOCKED: <reason>` on the final
   line.
@@ -125,11 +160,12 @@ concurrency, or authorization protocol:
   fixed or the authoritative requirements are explicitly amended.
 - Do not mark a tracked task complete unless the Reviewer approved it.
 - After approval, the Coordinator alone checks the selected task when it came
-  from a queue, stages only that task's changes and tracker update, verifies the
-  staged diff excludes pre-existing unrelated changes, creates one commit, and
-  pushes it before selecting another task. Use the queue item title as the
-  tracked task's commit title and the derived imperative title for a direct
-  task.
+  from a queue, performs the permitted ExecPlan finalization, stages only that
+  task's changes and tracker update, verifies the staged diff excludes
+  pre-existing unrelated changes, includes the task's ExecPlan, creates one
+  commit, and pushes it before selecting another task. Use the queue item title
+  as the tracked task's commit title and the derived imperative title for a
+  direct task.
 - Stop if task-related and unrelated changes cannot be staged separately or if
   the branch cannot be pushed safely to its configured upstream.
 - If a workflow commit is created but cannot be pushed, retain it, report the
