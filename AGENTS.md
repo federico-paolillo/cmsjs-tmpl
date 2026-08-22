@@ -127,6 +127,30 @@ the tree clean.
 This is a reusable Strapi 5 + Next.js template meant to give a best-in-class
 foundation. Treat the architecture as an asset to extend, not rewrite.
 
+This template is deliberately styleless and deliberately SSR + ISR. Treat both
+as contracts to preserve while building a specific site:
+
+- The frontend is SSR + ISR only. Do not add `generateStaticParams`, a static
+  export, or build-time prerendering of content. On-demand revalidation flows
+  through `app/refresh/route.ts`; extend `cms/tags.ts` and `cms/cache.ts` when
+  adding content types.
+- Static routes (no dynamic segment) are prerendered at build time by default,
+  and `"use cache"` data does not change that — Next bakes the fetch into the
+  static shell. Any CMS-backed route must call `await io()` (from `next/cache`,
+  in page components) or `await connection()` (from `next/server`, in metadata
+  routes such as `sitemap.ts`) so the content is rendered at request time instead
+  of forcing a build-time dependency on the backend.
+- Placeholder components (`frontend/components/site-header.tsx`, `site-nav.tsx`,
+  `site-footer.tsx`) and the unstyled page content are intentional. Keep and
+  extend them with the target site's design; do not delete them or replace the
+  dispatch/pipeline model.
+- The discovery layer — list endpoints in `cms/client.ts`/`connector.ts`/`data.ts`,
+  list pages under `app/(content)/*/page.tsx`, `app/sitemap.ts`, `app/robots.ts` —
+  must be extended alongside any new content type, not bolted on later.
+- Collection routes (`app/(content)/articles|events|news/page.tsx`) render their
+  `*-list-page.tsx` component directly; this is the one intentional exception to
+  the page-switch dispatch, which exists for single-document pages.
+
 - Never change the stack, and never alter the core frontend architecture.
 - Frontend routes delegate to a single page-switch component
   (`frontend/components/page-switch.tsx`) that dispatches to concrete page
@@ -137,11 +161,14 @@ foundation. Treat the architecture as an asset to extend, not rewrite.
   using `"use cache"` with `cacheLife`/`cacheTag`) → webhook-driven revalidation
   (`webhook.ts` and `app/refresh/route.ts`). Do not replace this pipeline.
 - When adding a content type, extend the existing pipeline end-to-end (schema →
-  client → mapper → connector → cached read → cache tag/webhook mapping →
-  page-switch entry plus a page component) rather than a parallel path.
+  client → mapper → connector → cached read → cache tag/webhook mapping → list
+  endpoint → sitemap → navigation entry → page-switch entry plus a page
+  component) rather than a parallel path.
 - You may add cross-cutting components in `frontend/components/` and use any
   Next.js feature as long as the architecture above is unchanged.
-- Frontend tests may be skipped when they would only assert visuals.
+- Frontend tests use vitest and may be skipped only when they would only assert
+  visuals. Non-visual server-side logic at trust boundaries (webhook secret and
+  tag mapping, mapper validation, query serialization) is required coverage.
 - Use Tailwind CSS as-is. Normalize genuinely repeated patterns into custom
   utilities. Creating a custom theme or a component/design system is allowed and
   recommended when the site calls for it (e.g., a showcase site).

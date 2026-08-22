@@ -131,6 +131,24 @@ export interface NewsDto {
   content: BlocksDto;
 }
 
+export interface ArticleListItemDto {
+  pageType: "article";
+  identity: IdentityDto;
+}
+
+export interface EventListItemDto {
+  pageType: "event";
+  identity: IdentityDto;
+  summary: string;
+  when?: string;
+}
+
+export interface NewsListItemDto {
+  pageType: "news";
+  identity: IdentityDto;
+  summary: string;
+}
+
 export type CmsPageDto = ArticleDto | HomePageDto | EventDto | NewsDto;
 
 export type PageType = CmsPageDto["pageType"];

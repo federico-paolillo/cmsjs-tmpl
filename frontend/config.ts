@@ -6,6 +6,7 @@ export interface AppConfig {
   cmsApiToken: string | null;
   cmsWebhooksSecretHeader: string;
   cmsWebhooksSecretHeaderValue: string;
+  siteUrl: URL;
 }
 
 // Remember to upkeep this list when adding new env. vars
@@ -17,6 +18,7 @@ const envVarKeys = [
   "CMS_API_TOKEN",
   "CMS_WEBHOOKS_SECRET_HEADER",
   "CMS_WEBHOOKS_SECRET_HEADER_VALUE",
+  "SITE_URL",
 ] as const;
 
 type EnvVarKey = (typeof envVarKeys)[number];
@@ -27,11 +29,12 @@ function makeConfig(): AppConfig {
   return Object.freeze({
     cmsUrl: new URL(requireEnvVar("CMS_URL")),
     cmsMediaUrl: new URL(requireEnvVar("CMS_MEDIA_URL")),
-    cmsApiToken: requireEnvVar("CMS_API_TOKEN"),
+    cmsApiToken: optionalEnvVar("CMS_API_TOKEN"),
     cmsWebhooksSecretHeader: requireEnvVar("CMS_WEBHOOKS_SECRET_HEADER"),
     cmsWebhooksSecretHeaderValue: requireEnvVar(
       "CMS_WEBHOOKS_SECRET_HEADER_VALUE",
     ),
+    siteUrl: new URL(requireEnvVar("SITE_URL")),
   });
 }
 
@@ -43,4 +46,8 @@ function requireEnvVar(value: EnvVarKey): string {
   }
 
   throw new Error(`Env. var. ${value} is not set`);
+}
+
+function optionalEnvVar(value: EnvVarKey): string | null {
+  return process.env[value] ?? null;
 }

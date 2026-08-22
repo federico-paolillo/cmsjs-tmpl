@@ -133,7 +133,13 @@ function Text({ text }: { text: TextDto }) {
   return content;
 }
 
-function CmsImage({ image, loading }: { image: ImageDto, loading?: "eager" | "lazy" | undefined }) {
+function CmsImage({
+  image,
+  loading,
+}: {
+  image: ImageDto;
+  loading?: "eager" | "lazy" | undefined;
+}) {
   return (
     <Image
       alt={image.alt}

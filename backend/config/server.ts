@@ -8,7 +8,7 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server =>
       keys: env.array('APP_KEYS')!,
     },
     webhooks: {
-      populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
+      populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', true),
       defaultHeaders: {
         [`x-${env('WEBHOOKS_SECRET_HEADER')}`]: `${env("WEBHOOKS_SECRET_HEADER_VALUE")}`
       }

@@ -1,9 +1,12 @@
 import { contentCacheProfile } from "@cmsjs/cms/cache";
 import type {
   ArticleDto,
+  ArticleListItemDto,
   EventDto,
+  EventListItemDto,
   HomePageDto,
   NewsDto,
+  NewsListItemDto,
 } from "@cmsjs/cms/model";
 import type { Result } from "@cmsjs/cms/result";
 import { deps } from "@cmsjs/deps";
@@ -55,6 +58,39 @@ export async function getHomePage(): Promise<HomePageDto | null> {
   return valueOrThrow(result);
 }
 
+export async function listArticles(): Promise<ArticleListItemDto[]> {
+  "use cache";
+
+  cacheLife(contentCacheProfile);
+  cacheTag("articles");
+
+  const result = await deps.connector.listArticles();
+
+  return listOrThrow(result);
+}
+
+export async function listEvents(): Promise<EventListItemDto[]> {
+  "use cache";
+
+  cacheLife(contentCacheProfile);
+  cacheTag("events");
+
+  const result = await deps.connector.listEvents();
+
+  return listOrThrow(result);
+}
+
+export async function listNews(): Promise<NewsListItemDto[]> {
+  "use cache";
+
+  cacheLife(contentCacheProfile);
+  cacheTag("news");
+
+  const result = await deps.connector.listNews();
+
+  return listOrThrow(result);
+}
+
 function valueOrThrow<T>(result: Result<T>): T | null {
   if (result.ok) {
     return result.value;
@@ -62,6 +98,18 @@ function valueOrThrow<T>(result: Result<T>): T | null {
 
   if (result.problem.kind === "not_found") {
     return null;
+  }
+
+  throw new Error(result.problem.message, { cause: result.problem });
+}
+
+function listOrThrow<T>(result: Result<T[]>): T[] {
+  if (result.ok) {
+    return result.value;
+  }
+
+  if (result.problem.kind === "not_found") {
+    return [];
   }
 
   throw new Error(result.problem.message, { cause: result.problem });

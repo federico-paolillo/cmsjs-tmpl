@@ -9,10 +9,12 @@ import type {
 } from "@cmsjs/cms/client";
 import type {
   ArticleDto,
+  ArticleListItemDto,
   BlockDto,
   BlocksDto,
   CodeBlockDto,
   EventDto,
+  EventListItemDto,
   HeadingBlockDto,
   HeroDto,
   HomePageDto,
@@ -25,6 +27,7 @@ import type {
   ListBlockDto,
   ListItemDto,
   NewsDto,
+  NewsListItemDto,
   ParagraphBlockDto,
   QuoteBlockDto,
   SectionDto,
@@ -817,6 +820,72 @@ function news(
   });
 }
 
+function articleListItem(
+  value: unknown,
+  path: string,
+  problems: string[],
+): ArticleListItemDto | undefined {
+  const node = record(value);
+  if (!node) {
+    problems.push(`expected object at ${path}`);
+    return undefined;
+  }
+  const identityDto = identity(node.identity, `${path}.identity`, problems);
+  if (identityDto === undefined) {
+    return undefined;
+  }
+  return freezeDeep<ArticleListItemDto>({
+    pageType: "article",
+    identity: identityDto,
+  });
+}
+
+function eventListItem(
+  value: unknown,
+  path: string,
+  problems: string[],
+): EventListItemDto | undefined {
+  const node = record(value);
+  if (!node) {
+    problems.push(`expected object at ${path}`);
+    return undefined;
+  }
+  const identityDto = identity(node.identity, `${path}.identity`, problems);
+  const summary = requiredString(node, "summary", path, problems);
+  if (identityDto === undefined || summary === undefined) {
+    return undefined;
+  }
+  const when = optionalString(node, "when", path, problems);
+  return freezeDeep<EventListItemDto>({
+    pageType: "event",
+    identity: identityDto,
+    summary,
+    ...(when !== undefined ? { when } : {}),
+  });
+}
+
+function newsListItem(
+  value: unknown,
+  path: string,
+  problems: string[],
+): NewsListItemDto | undefined {
+  const node = record(value);
+  if (!node) {
+    problems.push(`expected object at ${path}`);
+    return undefined;
+  }
+  const identityDto = identity(node.identity, `${path}.identity`, problems);
+  const summary = requiredString(node, "summary", path, problems);
+  if (identityDto === undefined || summary === undefined) {
+    return undefined;
+  }
+  return freezeDeep<NewsListItemDto>({
+    pageType: "news",
+    identity: identityDto,
+    summary,
+  });
+}
+
 export function toArticleDto(
   raw: ArticleData,
   mediaBaseUrl: string,
@@ -857,6 +926,20 @@ export function toNewsDto(
     ...value,
     content: normalizeBlocks(value.content, mediaBaseUrl),
   }));
+}
+
+export function toArticleListItemDto(
+  raw: ArticleData,
+): Result<ArticleListItemDto> {
+  return mapResource("article", raw, articleListItem);
+}
+
+export function toEventListItemDto(raw: EventData): Result<EventListItemDto> {
+  return mapResource("event", raw, eventListItem);
+}
+
+export function toNewsListItemDto(raw: NewsData): Result<NewsListItemDto> {
+  return mapResource("news", raw, newsListItem);
 }
 
 function normalizeResult<T>(

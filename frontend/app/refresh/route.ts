@@ -1,6 +1,7 @@
-import { timingSafeEqual } from "node:crypto";
-import { contentCacheProfile, tagsByModel } from "@cmsjs/cms/cache";
+import { contentCacheProfile } from "@cmsjs/cms/cache";
+import { tagsForWebhook } from "@cmsjs/cms/tags";
 import { parseWebhookPayload, type WebhookPayload } from "@cmsjs/cms/webhook";
+import { timingSafeCompareSecrets } from "@cmsjs/cms/webhook-secret";
 import { config } from "@cmsjs/config";
 import { revalidateTag } from "next/cache";
 
@@ -63,37 +64,4 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   return Response.json({ revalidated: tags });
-}
-
-export function tagsForWebhook(payload: WebhookPayload): string[] {
-  if (!(payload.model in tagsByModel)) {
-    return [];
-  }
-
-  const mapping = tagsByModel[payload.model as keyof typeof tagsByModel];
-
-  const tags: string[] = [mapping.collection];
-
-  if (mapping.item) {
-    const slug = payload.entry.identity?.slug;
-
-    if (typeof slug === "string") {
-      tags.push(`${mapping.item}: ${slug}`);
-    }
-  }
-
-  return tags;
-}
-
-function timingSafeCompareSecrets(
-  actual: string | null,
-  expected: string,
-): boolean {
-  const actualBytes = Buffer.from(actual ?? "");
-  const expectedBytes = Buffer.from(expected);
-
-  return (
-    actualBytes.length === expectedBytes.length &&
-    timingSafeEqual(actualBytes, expectedBytes)
-  );
 }

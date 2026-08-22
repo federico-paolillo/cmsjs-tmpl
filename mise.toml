@@ -1,6 +1,9 @@
 [tools]
 node = "26"
 
+[env]
+_.file = "frontend/.env.development"
+
 [tasks."be:build"]
 description = "Build the Strapi backend"
 dir = "backend"

@@ -21,12 +21,25 @@ export type NewsData =
   paths["/news"]["get"]["responses"][200]["content"]["application/json"]["data"][number];
 export type HomePageData =
   paths["/home-page"]["get"]["responses"][200]["content"]["application/json"]["data"];
+export type ArticleListData =
+  paths["/articles"]["get"]["responses"][200]["content"]["application/json"]["data"];
+export type EventListData =
+  paths["/events"]["get"]["responses"][200]["content"]["application/json"]["data"];
+export type NewsListData =
+  paths["/news"]["get"]["responses"][200]["content"]["application/json"]["data"];
+
+// Provisional limit: Strapi's REST max page size. Recalibration trigger: raise
+// pagination in the list pipeline when a site is expected to exceed this.
+const LIST_PAGE_SIZE = 100;
 
 export interface CmsClient {
   getArticleBySlug(slug: string): Promise<Result<ArticleData>>;
   getEventBySlug(slug: string): Promise<Result<EventData>>;
   getNewsBySlug(slug: string): Promise<Result<NewsData>>;
   getHomePage(): Promise<Result<HomePageData>>;
+  listArticles(): Promise<Result<ArticleListData>>;
+  listEvents(): Promise<Result<EventListData>>;
+  listNews(): Promise<Result<NewsListData>>;
 }
 
 export function makeCmsClient(
@@ -46,6 +59,9 @@ export function makeCmsClient(
     getEventBySlug: (slug) => getEventBySlug(rawClient, slug),
     getNewsBySlug: (slug) => getNewsBySlug(rawClient, slug),
     getHomePage: () => getHomePage(rawClient),
+    listArticles: () => listArticles(rawClient),
+    listEvents: () => listEvents(rawClient),
+    listNews: () => listNews(rawClient),
   };
   return Object.freeze(client);
 }
@@ -121,6 +137,45 @@ async function getHomePage(
   );
 }
 
+async function listArticles(
+  rawClient: Client<paths>,
+): Promise<Result<ArticleListData>> {
+  return toResult(
+    rawClient.GET("/articles", {
+      params: {
+        query: listQuery({ populate: { identity: true } }, "publishedAt:desc"),
+      },
+    }),
+    { resource: "articles" },
+  );
+}
+
+async function listEvents(
+  rawClient: Client<paths>,
+): Promise<Result<EventListData>> {
+  return toResult(
+    rawClient.GET("/events", {
+      params: {
+        query: listQuery({ populate: { identity: true } }, "publishedAt:desc"),
+      },
+    }),
+    { resource: "events" },
+  );
+}
+
+async function listNews(
+  rawClient: Client<paths>,
+): Promise<Result<NewsListData>> {
+  return toResult(
+    rawClient.GET("/news", {
+      params: {
+        query: listQuery({ populate: { identity: true } }, "publishedAt:desc"),
+      },
+    }),
+    { resource: "news" },
+  );
+}
+
 async function toResult<T>(
   resultPromise: Promise<{ data?: { data: T }; response: Response }>,
   metadata: ResourceRef,
@@ -147,6 +202,15 @@ function contentQuery(slug: string, populate: unknown): never {
     status: "published",
     populate,
     filters: { identity: { slug: { $eq: slug } } },
+  });
+}
+
+function listQuery(populate: unknown, sort: string): never {
+  return deepQuery({
+    status: "published",
+    populate,
+    sort,
+    pagination: { pageSize: LIST_PAGE_SIZE },
   });
 }
 
