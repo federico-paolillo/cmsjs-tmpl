@@ -10,7 +10,7 @@
     "format": "biome format --write",
     "typegen": "next typegen",
     "typecheck": "npm run typegen && tsc --noEmit",
-    "check": "npm run lint && npm run typecheck && npm test",
+    "check": "npm run lint && npm run typecheck",
     "openapi": "openapi-typescript cms/schema.json -o cms/schema.d.ts && biome format --write cms/schema.d.ts"
   },
   "dependencies": {

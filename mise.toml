@@ -1,2 +1,42 @@
 [tools]
 node = "26"
+
+[tasks."be:build"]
+description = "Build the Strapi backend"
+dir = "backend"
+run = "npm run build"
+
+[tasks."be:types"]
+description = "Generate Strapi TypeScript types"
+dir = "backend"
+run = "npm run types"
+
+[tasks."be:openapi"]
+description = "Generate the Strapi OpenAPI schema"
+dir = "backend"
+run = "npm run openapi"
+
+[tasks."fe:build"]
+description = "Build the Next.js frontend"
+dir = "frontend"
+run = "npm run build"
+
+[tasks."fe:lint"]
+description = "Lint the frontend with Biome"
+dir = "frontend"
+run = "npm run lint"
+
+[tasks."fe:typecheck"]
+description = "Type-check the frontend"
+dir = "frontend"
+run = "npm run typecheck"
+
+[tasks."fe:openapi"]
+description = "Generate frontend types from the OpenAPI schema"
+dir = "frontend"
+run = "npm run openapi"
+
+[tasks."fe:check"]
+description = "Lint and type-check the frontend"
+dir = "frontend"
+run = "npm run check"

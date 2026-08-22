@@ -1,4 +1,6 @@
-// import type { Core } from '@strapi/strapi';
+import type { Core } from "@strapi/strapi";
+import { ensureDefaultAdmin } from "./bootstrap/admin-user";
+import { ensureNextJsWebhook } from "./bootstrap/webhook";
 
 export default {
   /**
@@ -16,5 +18,8 @@ export default {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    await ensureDefaultAdmin(strapi);
+    await ensureNextJsWebhook(strapi);
+  },
 };

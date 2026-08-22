@@ -122,10 +122,41 @@ the tree clean.
 - Harden images made by the project as rootless and distroless with read-only
   filesystems. Do not impose project-owned hardening on third-party images.
 
-## Strapi 5
+## Architecture Guidelines
 
-- Before changing content types in Strapi 5 request explicit user confirmation
+This is a reusable Strapi 5 + Next.js template meant to give a best-in-class
+foundation. Treat the architecture as an asset to extend, not rewrite.
+
+- Never change the stack, and never alter the core frontend architecture.
+- Frontend routes delegate to a single page-switch component
+  (`frontend/components/page-switch.tsx`) that dispatches to concrete page
+  components (`frontend/components/*-page.tsx`). Keep this dispatch model.
+- Consume CMS data through `frontend/cms/` exactly as defined, including its
+  caching approach: raw Strapi client (`client.ts`) → `connector.ts` maps raw
+  data to frontend DTOs (`model.ts`) via `mappers.ts` → cached reads (`data.ts`
+  using `"use cache"` with `cacheLife`/`cacheTag`) → webhook-driven revalidation
+  (`webhook.ts` and `app/refresh/route.ts`). Do not replace this pipeline.
+- When adding a content type, extend the existing pipeline end-to-end (schema →
+  client → mapper → connector → cached read → cache tag/webhook mapping →
+  page-switch entry plus a page component) rather than a parallel path.
+- You may add cross-cutting components in `frontend/components/` and use any
+  Next.js feature as long as the architecture above is unchanged.
+- Frontend tests may be skipped when they would only assert visuals.
+- Use Tailwind CSS as-is. Normalize genuinely repeated patterns into custom
+  utilities. Creating a custom theme or a component/design system is allowed and
+  recommended when the site calls for it (e.g., a showcase site).
+- Keep Strapi 5 changes within its default mechanisms. Using the bootstrap phase
+  with small helpers (as in `backend/src/bootstrap/`) is fine; do not add extra
+  API endpoints through low-level Strapi plumbing.
+- Apply Strapi 5 changes through its APIs or the admin UI (browser) so they are
+  applied correctly. Avoid editing schema files directly unless unavoidable.
+- Before changing content types in Strapi 5, request explicit user confirmation
   unless it was given in advance in the prompt.
 - Do not produce or request any type of tests for the Strapi 5 backend. The
-  proper verification for the Strapi 5 backend is simply that it starts properly
-  from an empty database.
+  proper verification is simply that it starts from an empty database.
+- After any backend or frontend change, refresh the generated artifacts that
+  document the API surface via the mise tasks `be:openapi` (writes
+  `frontend/cms/schema.json`), `fe:openapi` (writes `frontend/cms/schema.d.ts`),
+  and `be:types` when backend types changed.
+- Upgrading Strapi 5 to a new version is forbidden unless the user explicitly
+  asks for it.

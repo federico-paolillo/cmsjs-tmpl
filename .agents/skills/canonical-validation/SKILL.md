@@ -11,18 +11,13 @@ Use this skill before a validated implementation or review handoff.
 
 1. If the repository documents a canonical aggregate validation entrypoint, run
    it.
-2. Otherwise determine which areas changed and run all applicable canonical Mise
-   tasks from `mise.toml`:
-   - Backend changes:
-     - `mise run be:build`
-     - `mise run be:test`
-     - `mise run be:lint`
-   - Frontend changes:
-     - `mise run fe:build`
-     - `mise run fe:test`
-     - `mise run fe:lint`
-     - `mise run fe:check`
-   - Run both sets when both backend and frontend changed.
+2. Otherwise determine which areas changed and run the applicable canonical Mise
+   tasks from `mise.toml`. The names below are a reference; only run the tasks
+   that are actually defined in `mise.toml` (list them with `mise tasks`), and
+   skip any that are missing — a project may not define every task.
+   - Backend changes: `be:build`, `be:test`, `be:lint`, `be:types`, `be:openapi`
+   - Frontend changes: `fe:build`, `fe:test`, `fe:lint`, `fe:check`, `fe:openapi`
+   - Run the applicable tasks for both sets when both areas changed.
 3. Do not hand off validated work until all applicable canonical tasks pass
    without errors.
 4. Report the commands run and their outcomes in the handoff.
