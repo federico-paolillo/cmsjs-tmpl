@@ -1,8 +1,8 @@
 import type { CmsPageDto } from "@cmsjs/cms/model";
-import { ArticlePage } from "@cmsjs/components/article-page";
-import { EventPage } from "@cmsjs/components/event-page";
-import { HomePage } from "@cmsjs/components/home-page";
-import { NewsPage } from "@cmsjs/components/news-page";
+import { ArticlePage } from "@cmsjs/components/articles/page";
+import { EventPage } from "@cmsjs/components/events/page";
+import { HomePage } from "@cmsjs/components/home/page";
+import { NewsPage } from "@cmsjs/components/news/page";
 
 export function PageSwitch({ page }: { page: CmsPageDto }) {
   switch (page.pageType) {

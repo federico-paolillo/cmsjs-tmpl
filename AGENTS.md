@@ -127,8 +127,10 @@ the tree clean.
 This is a reusable Strapi 5 + Next.js template meant to give a best-in-class
 foundation. Treat the architecture as an asset to extend, not rewrite.
 
-This template is deliberately styleless and deliberately SSR + ISR. Treat both
-as contracts to preserve while building a specific site:
+This template is deliberately SSR + ISR. Treat that rendering model as a
+contract to preserve while building a specific site. The bundled styles and
+components are demonstrative presentation examples, not design laws or assets
+to reuse as-is:
 
 - The frontend is SSR + ISR only. Do not add `generateStaticParams`, a static
   export, or build-time prerendering of content. On-demand revalidation flows
@@ -140,10 +142,11 @@ as contracts to preserve while building a specific site:
   in page components) or `await connection()` (from `next/server`, in metadata
   routes such as `sitemap.ts`) so the content is rendered at request time instead
   of forcing a build-time dependency on the backend.
-- Placeholder components (`frontend/components/site-header.tsx`, `site-nav.tsx`,
-  `site-footer.tsx`) and the unstyled page content are intentional. Keep and
-  extend them with the target site's design; do not delete them or replace the
-  dispatch/pipeline model.
+- Keep and extend the target site's design while preserving the dispatch and
+  CMS pipeline model. Own page-specific presentation under
+  `frontend/components/<page>/`; use `components/layout/` only for site chrome,
+  `components/shared/` only for genuinely cross-page presentation, and keep
+  the cross-page dispatcher at `components/page-switch.tsx`.
 - The discovery layer — list endpoints in `cms/client.ts`/`connector.ts`/`data.ts`,
   list pages under `app/(content)/*/page.tsx`, `app/sitemap.ts`, `app/robots.ts` —
   must be extended alongside any new content type, not bolted on later.
@@ -154,7 +157,7 @@ as contracts to preserve while building a specific site:
 - Never change the stack, and never alter the core frontend architecture.
 - Frontend routes delegate to a single page-switch component
   (`frontend/components/page-switch.tsx`) that dispatches to concrete page
-  components (`frontend/components/*-page.tsx`). Keep this dispatch model.
+  components (`frontend/components/<page>/page.tsx`). Keep this dispatch model.
 - Consume CMS data through `frontend/cms/` exactly as defined, including its
   caching approach: raw Strapi client (`client.ts`) → `connector.ts` maps raw
   data to frontend DTOs (`model.ts`) via `mappers.ts` → cached reads (`data.ts`

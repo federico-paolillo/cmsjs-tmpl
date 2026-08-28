@@ -17,12 +17,12 @@ The template is intentionally **not** a static (SSG) site: there is no
 Pages are rendered on the server and cached for a `days` profile; edits in Strapi
 invalidate the affected cache tags.
 
-## Styleless by design
+## Presentation examples
 
-Every page renders as plain, unstyled semantic HTML, and the layout ships placeholder
-`site-header`, `site-nav`, and `site-footer` components. These placeholders are
-intentional and must be **kept and extended** (styled, restructured) by whoever builds
-the target site — not deleted or replaced wholesale. There is no design system or theme.
+The bundled styles and components demonstrate one complete presentation; they
+are not design laws or presentation assets to reuse as-is. Adapt the target
+site's visual language while preserving the SSR + ISR model, CMS pipeline, and
+route/component ownership conventions in `AGENTS.md`.
 
 ## Environment variables
 

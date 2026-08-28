@@ -1,5 +1,5 @@
 import { listNews } from "@cmsjs/cms/data";
-import { NewsListPage } from "@cmsjs/components/news-list-page";
+import { NewsListPage } from "@cmsjs/components/news/list-page";
 import type { Metadata } from "next";
 import { io } from "next/cache";
 

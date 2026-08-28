@@ -1,5 +1,5 @@
 import { listArticles } from "@cmsjs/cms/data";
-import { ArticlesListPage } from "@cmsjs/components/articles-list-page";
+import { ArticlesListPage } from "@cmsjs/components/articles/list-page";
 import type { Metadata } from "next";
 import { io } from "next/cache";
 

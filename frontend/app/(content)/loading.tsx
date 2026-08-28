@@ -1,7 +1,5 @@
+import { LoadingSkeleton } from "@cmsjs/components/shared/loading-skeleton";
+
 export default function Loading() {
-  return (
-    <main aria-busy="true" aria-live="polite">
-      <p>Loading content…</p>
-    </main>
-  );
+  return <LoadingSkeleton />;
 }

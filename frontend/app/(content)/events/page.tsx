@@ -1,5 +1,5 @@
 import { listEvents } from "@cmsjs/cms/data";
-import { EventsListPage } from "@cmsjs/components/events-list-page";
+import { EventsListPage } from "@cmsjs/components/events/list-page";
 import type { Metadata } from "next";
 import { io } from "next/cache";
 
