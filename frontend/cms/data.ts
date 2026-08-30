@@ -1,4 +1,3 @@
-import { contentCacheProfile } from "@cmsjs/cms/cache";
 import type {
   ArticleDto,
   ArticleListItemDto,
@@ -17,7 +16,7 @@ export async function getArticleBySlug(
 ): Promise<ArticleDto | null> {
   "use cache";
 
-  cacheLife(contentCacheProfile);
+  cacheLife("days");
   cacheTag("articles", `article:${slug}`);
 
   const result = await deps.connector.getArticleBySlug(slug);
@@ -28,7 +27,7 @@ export async function getArticleBySlug(
 export async function getEventBySlug(slug: string): Promise<EventDto | null> {
   "use cache";
 
-  cacheLife(contentCacheProfile);
+  cacheLife("days");
   cacheTag("events", `event:${slug}`);
 
   const result = await deps.connector.getEventBySlug(slug);
@@ -39,7 +38,7 @@ export async function getEventBySlug(slug: string): Promise<EventDto | null> {
 export async function getNewsBySlug(slug: string): Promise<NewsDto | null> {
   "use cache";
 
-  cacheLife(contentCacheProfile);
+  cacheLife("days");
   cacheTag("news", `news:${slug}`);
 
   const result = await deps.connector.getNewsBySlug(slug);
@@ -50,7 +49,7 @@ export async function getNewsBySlug(slug: string): Promise<NewsDto | null> {
 export async function getHomePage(): Promise<HomePageDto | null> {
   "use cache";
 
-  cacheLife(contentCacheProfile);
+  cacheLife("days");
   cacheTag("home-page");
 
   const result = await deps.connector.getHomePage();
@@ -61,7 +60,7 @@ export async function getHomePage(): Promise<HomePageDto | null> {
 export async function listArticles(): Promise<ArticleListItemDto[]> {
   "use cache";
 
-  cacheLife(contentCacheProfile);
+  cacheLife("days");
   cacheTag("articles");
 
   const result = await deps.connector.listArticles();
@@ -72,7 +71,7 @@ export async function listArticles(): Promise<ArticleListItemDto[]> {
 export async function listEvents(): Promise<EventListItemDto[]> {
   "use cache";
 
-  cacheLife(contentCacheProfile);
+  cacheLife("days");
   cacheTag("events");
 
   const result = await deps.connector.listEvents();
@@ -83,7 +82,7 @@ export async function listEvents(): Promise<EventListItemDto[]> {
 export async function listNews(): Promise<NewsListItemDto[]> {
   "use cache";
 
-  cacheLife(contentCacheProfile);
+  cacheLife("days");
   cacheTag("news");
 
   const result = await deps.connector.listNews();

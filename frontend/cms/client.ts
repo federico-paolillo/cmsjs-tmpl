@@ -143,7 +143,7 @@ async function listArticles(
   return toResult(
     rawClient.GET("/articles", {
       params: {
-        query: listQuery({ populate: { identity: true } }, "publishedAt:desc"),
+        query: listQuery({ identity: true }, "publishedAt:desc"),
       },
     }),
     { resource: "articles" },
@@ -156,7 +156,7 @@ async function listEvents(
   return toResult(
     rawClient.GET("/events", {
       params: {
-        query: listQuery({ populate: { identity: true } }, "publishedAt:desc"),
+        query: listQuery({ identity: true }, "publishedAt:desc"),
       },
     }),
     { resource: "events" },
@@ -169,7 +169,7 @@ async function listNews(
   return toResult(
     rawClient.GET("/news", {
       params: {
-        query: listQuery({ populate: { identity: true } }, "publishedAt:desc"),
+        query: listQuery({ identity: true }, "publishedAt:desc"),
       },
     }),
     { resource: "news" },

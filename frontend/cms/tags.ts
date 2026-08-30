@@ -1,7 +1,13 @@
 // Pure mapping from a Strapi webhook payload to Next.js cache tags.
 
-import { tagsByModel } from "@cmsjs/cms/cache";
 import type { WebhookPayload } from "@cmsjs/cms/webhook";
+
+const tagsByModel = {
+  article: { collection: "articles", item: "article" },
+  event: { collection: "events", item: "event" },
+  "news-item": { collection: "news", item: "news" },
+  "home-page": { collection: "home-page", item: null },
+} as const;
 
 export function tagsForWebhook(payload: WebhookPayload): string[] {
   if (!(payload.model in tagsByModel)) {

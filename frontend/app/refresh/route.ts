@@ -1,7 +1,9 @@
-import { contentCacheProfile } from "@cmsjs/cms/cache";
 import { tagsForWebhook } from "@cmsjs/cms/tags";
-import { parseWebhookPayload, type WebhookPayload } from "@cmsjs/cms/webhook";
-import { timingSafeCompareSecrets } from "@cmsjs/cms/webhook-secret";
+import {
+  parseWebhookPayload,
+  timingSafeCompareWebhookSecret,
+  type WebhookPayload,
+} from "@cmsjs/cms/webhook";
 import { config } from "@cmsjs/config";
 import { revalidateTag } from "next/cache";
 
@@ -31,7 +33,9 @@ export async function POST(request: Request): Promise<Response> {
 
   const providedHeaderValue = request.headers.get(`x-${expectedSecretHeader}`);
 
-  if (!timingSafeCompareSecrets(providedHeaderValue, expectedSecretValue)) {
+  if (
+    !timingSafeCompareWebhookSecret(providedHeaderValue, expectedSecretValue)
+  ) {
     return new Response("Unauthorized", { status: 401 });
   }
 
@@ -60,7 +64,7 @@ export async function POST(request: Request): Promise<Response> {
   const tags = tagsForWebhook(payload);
 
   for (const tag of tags) {
-    revalidateTag(tag, contentCacheProfile);
+    revalidateTag(tag, "days");
   }
 
   return Response.json({ revalidated: tags });

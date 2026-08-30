@@ -29,7 +29,7 @@ function makeConfig(): AppConfig {
   return Object.freeze({
     cmsUrl: new URL(requireEnvVar("CMS_URL")),
     cmsMediaUrl: new URL(requireEnvVar("CMS_MEDIA_URL")),
-    cmsApiToken: optionalEnvVar("CMS_API_TOKEN"),
+    cmsApiToken: requireEnvVar("CMS_API_TOKEN"),
     cmsWebhooksSecretHeader: requireEnvVar("CMS_WEBHOOKS_SECRET_HEADER"),
     cmsWebhooksSecretHeaderValue: requireEnvVar(
       "CMS_WEBHOOKS_SECRET_HEADER_VALUE",
@@ -46,8 +46,4 @@ function requireEnvVar(value: EnvVarKey): string {
   }
 
   throw new Error(`Env. var. ${value} is not set`);
-}
-
-function optionalEnvVar(value: EnvVarKey): string | null {
-  return process.env[value] ?? null;
 }

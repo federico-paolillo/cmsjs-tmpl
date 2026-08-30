@@ -3,6 +3,7 @@ import { ArticlePage } from "@cmsjs/components/articles/page";
 import { EventPage } from "@cmsjs/components/events/page";
 import { HomePage } from "@cmsjs/components/home/page";
 import { NewsPage } from "@cmsjs/components/news/page";
+import { notFound } from "next/navigation";
 
 export function PageSwitch({ page }: { page: CmsPageDto }) {
   switch (page.pageType) {
@@ -15,6 +16,6 @@ export function PageSwitch({ page }: { page: CmsPageDto }) {
     case "news":
       return <NewsPage page={page} />;
     default:
-      return <></>;
+      notFound();
   }
 }

@@ -6,17 +6,25 @@ import { notFound } from "next/navigation";
 export async function generateMetadata({
   params,
 }: PageProps<"/news/[slug]">): Promise<Metadata> {
-  const page = await getNewsBySlug((await params).slug);
+  const { slug } = await params;
+
+  const page = await getNewsBySlug(slug);
+
   if (!page) {
     notFound();
   }
+
   return { title: page.identity.title, description: page.summary };
 }
 
 export default async function NewsRoute({ params }: PageProps<"/news/[slug]">) {
-  const page = await getNewsBySlug((await params).slug);
+  const { slug } = await params;
+
+  const page = await getNewsBySlug(slug);
+
   if (!page) {
     notFound();
   }
+
   return <PageSwitch page={page} />;
 }

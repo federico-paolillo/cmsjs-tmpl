@@ -5,7 +5,7 @@ export function SiteFooter() {
     <footer className="border-t border-border">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-6 sm:px-8">
         <p className="font-mono text-xs tracking-[0.08em] text-muted">
-          cmsjs-tmpl
+          cmsjs-tmpl - Version: {process.env.NEXT_PUBLIC_APP_VERSION}
         </p>
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-4 gap-y-2 font-mono text-xs text-muted">

@@ -129,8 +129,8 @@ foundation. Treat the architecture as an asset to extend, not rewrite.
 
 This template is deliberately SSR + ISR. Treat that rendering model as a
 contract to preserve while building a specific site. The bundled styles and
-components are demonstrative presentation examples, not design laws or assets
-to reuse as-is:
+components are demonstrative presentation examples, not design laws or assets to
+reuse as-is:
 
 - The frontend is SSR + ISR only. Do not add `generateStaticParams`, a static
   export, or build-time prerendering of content. On-demand revalidation flows
@@ -140,20 +140,20 @@ to reuse as-is:
   and `"use cache"` data does not change that — Next bakes the fetch into the
   static shell. Any CMS-backed route must call `await io()` (from `next/cache`,
   in page components) or `await connection()` (from `next/server`, in metadata
-  routes such as `sitemap.ts`) so the content is rendered at request time instead
-  of forcing a build-time dependency on the backend.
-- Keep and extend the target site's design while preserving the dispatch and
-  CMS pipeline model. Own page-specific presentation under
+  routes such as `sitemap.ts`) so the content is rendered at request time
+  instead of forcing a build-time dependency on the backend.
+- Keep and extend the target site's design while preserving the dispatch and CMS
+  pipeline model. Own page-specific presentation under
   `frontend/components/<page>/`; use `components/layout/` only for site chrome,
-  `components/shared/` only for genuinely cross-page presentation, and keep
-  the cross-page dispatcher at `components/page-switch.tsx`.
-- The discovery layer — list endpoints in `cms/client.ts`/`connector.ts`/`data.ts`,
-  list pages under `app/(content)/*/page.tsx`, `app/sitemap.ts`, `app/robots.ts` —
-  must be extended alongside any new content type, not bolted on later.
+  `components/shared/` only for genuinely cross-page presentation, and keep the
+  cross-page dispatcher at `components/page-switch.tsx`.
+- The discovery layer — list endpoints in
+  `cms/client.ts`/`connector.ts`/`data.ts`, list pages under
+  `app/(content)/*/page.tsx`, `app/sitemap.ts`, `app/robots.ts` — must be
+  extended alongside any new content type, not bolted on later.
 - Collection routes (`app/(content)/articles|events|news/page.tsx`) render their
   `*-list-page.tsx` component directly; this is the one intentional exception to
   the page-switch dispatch, which exists for single-document pages.
-
 - Never change the stack, and never alter the core frontend architecture.
 - Frontend routes delegate to a single page-switch component
   (`frontend/components/page-switch.tsx`) that dispatches to concrete page
@@ -190,3 +190,13 @@ to reuse as-is:
   and `be:types` when backend types changed.
 - Upgrading Strapi 5 to a new version is forbidden unless the user explicitly
   asks for it.
+- It is important to show the value of env. var. `NEXT_PUBLIC_APP_VERSION` in
+  the website footer. This information is critical to understand what version is
+  being used by an user when reporting issues.
+
+## Environment
+
+- NEVER alter machine or user environment variables. Always use `.env` files
+  local to your project. Take advantage of Mise-en-Place
+  [.env](https://mise.jdx.dev/environments/) support. If you must alter the
+  machine or user environment **stop** and ask for permission.

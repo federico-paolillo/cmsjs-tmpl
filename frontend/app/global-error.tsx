@@ -6,7 +6,10 @@ export default function GlobalError({ retry }: { retry: () => void }) {
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col">
-        <title>Application error | cmsjs-tmpl</title>
+        <title>
+          Application error | cmsjs-tmpl - Version{" "}
+          {process.env.NEXT_PUBLIC_APP_VERSION}
+        </title>
         <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-5 py-12 sm:px-8">
           <p className="font-mono text-xs font-medium tracking-[0.18em] text-accent uppercase">
             Application error
