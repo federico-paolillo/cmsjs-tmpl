@@ -167,6 +167,11 @@ reuse as-is:
   client → mapper → connector → cached read → cache tag/webhook mapping → list
   endpoint → sitemap → navigation entry → page-switch entry plus a page
   component) rather than a parallel path.
+- Proactively implement the shared Strapi Preview plus Next Draft Mode path for
+  an existing or new Draft & Publish content type only when unpublished
+  presentation materially helps editors. Do not add Preview mechanically to
+  every content type or create a parallel pipeline; the explicit confirmation
+  gate below still applies before any content-type change.
 - You may add cross-cutting components in `frontend/components/` and use any
   Next.js feature as long as the architecture above is unchanged.
 - Frontend tests use vitest and may be skipped only when they would only assert

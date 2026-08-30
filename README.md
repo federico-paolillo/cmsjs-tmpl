@@ -17,6 +17,10 @@ The template is intentionally **not** a static (SSG) site: there is no
 content. Pages are rendered on the server and cached for a `days` profile; edits
 in Strapi invalidate the affected cache tags.
 
+## Preview status
+
+Article and News Preview is [planned](.agents/plans/plan-preview-mode-for-articles-and-news.md) and not implemented in this template. It has no setup contract yet.
+
 ## Presentation examples
 
 The bundled styles and components demonstrate one complete presentation; they
