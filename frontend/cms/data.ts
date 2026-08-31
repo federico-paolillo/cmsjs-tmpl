@@ -10,6 +10,7 @@ import type {
 import type { Result } from "@cmsjs/cms/result";
 import { deps } from "@cmsjs/deps";
 import { cacheLife, cacheTag } from "next/cache";
+import { draftMode } from "next/headers";
 
 export async function getArticleBySlug(
   slug: string,
@@ -19,7 +20,11 @@ export async function getArticleBySlug(
   cacheLife("days");
   cacheTag("articles", `article:${slug}`);
 
-  const result = await deps.connector.getArticleBySlug(slug);
+  const { isEnabled } = await draftMode();
+  const result = await deps.connector.getArticleBySlug(
+    slug,
+    isEnabled ? "draft" : "published",
+  );
 
   return valueOrThrow(result);
 }
@@ -41,7 +46,11 @@ export async function getNewsBySlug(slug: string): Promise<NewsDto | null> {
   cacheLife("days");
   cacheTag("news", `news:${slug}`);
 
-  const result = await deps.connector.getNewsBySlug(slug);
+  const { isEnabled } = await draftMode();
+  const result = await deps.connector.getNewsBySlug(
+    slug,
+    isEnabled ? "draft" : "published",
+  );
 
   return valueOrThrow(result);
 }

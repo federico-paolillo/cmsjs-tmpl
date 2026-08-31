@@ -17,9 +17,15 @@ The template is intentionally **not** a static (SSG) site: there is no
 content. Pages are rendered on the server and cached for a `days` profile; edits
 in Strapi invalidate the affected cache tags.
 
-## Preview status
+## Preview
 
-Article and News Preview is [planned](.agents/plans/plan-preview-mode-for-articles-and-news.md) and not implemented in this template. It has no setup contract yet.
+Article and News Preview is available through Strapi Preview and Next Draft Mode.
+Draft requests bypass caches only in the editor's browser; public requests stay
+on the existing SSR + ISR path. Set backend `PREVIEW_CLIENT_URL`, use the same
+server-only `PREVIEW_SECRET` in backend and frontend, and configure the
+server-only `CMS_API_TOKEN` with least-privilege read access for all CMS content
+the site serves, including draft Article and News reads. Additional Draft &
+Publish types receive Preview selectively under the root `AGENTS.md` guidance.
 
 ## Presentation examples
 

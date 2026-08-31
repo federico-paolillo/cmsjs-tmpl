@@ -1,6 +1,5 @@
 // Typed view of the Strapi 5 webhook payload for entry events.
 
-import { timingSafeEqual } from "node:crypto";
 import type { components } from "@cmsjs/cms/schema";
 
 export interface WebhookEntry {
@@ -40,17 +39,4 @@ export function parseWebhookPayload(value: unknown): WebhookPayload | null {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-export function timingSafeCompareWebhookSecret(
-  actual: string | null,
-  expected: string,
-): boolean {
-  const actualBytes = Buffer.from(actual ?? "");
-  const expectedBytes = Buffer.from(expected);
-
-  return (
-    actualBytes.length === expectedBytes.length &&
-    timingSafeEqual(actualBytes, expectedBytes)
-  );
 }

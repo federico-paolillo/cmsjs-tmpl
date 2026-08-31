@@ -6,6 +6,7 @@ export interface AppConfig {
   cmsApiToken: string | null;
   cmsWebhooksSecretHeader: string;
   cmsWebhooksSecretHeaderValue: string;
+  previewSecret: string;
   siteUrl: URL;
 }
 
@@ -18,6 +19,7 @@ const envVarKeys = [
   "CMS_API_TOKEN",
   "CMS_WEBHOOKS_SECRET_HEADER",
   "CMS_WEBHOOKS_SECRET_HEADER_VALUE",
+  "PREVIEW_SECRET",
   "SITE_URL",
 ] as const;
 
@@ -34,6 +36,7 @@ function makeConfig(): AppConfig {
     cmsWebhooksSecretHeaderValue: requireEnvVar(
       "CMS_WEBHOOKS_SECRET_HEADER_VALUE",
     ),
+    previewSecret: requireEnvVar("PREVIEW_SECRET"),
     siteUrl: new URL(requireEnvVar("SITE_URL")),
   });
 }

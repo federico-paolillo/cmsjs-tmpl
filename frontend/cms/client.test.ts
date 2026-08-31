@@ -47,4 +47,34 @@ describe("serializeQuery", () => {
       expect(url.searchParams.has("populate[populate][identity]")).toBe(false);
     }
   });
+
+  it("requests draft Article and News details with their complete queries", async () => {
+    const urls: URL[] = [];
+    const fetch: typeof globalThis.fetch = async (input) => {
+      const request = input instanceof Request ? input : new Request(input);
+      urls.push(new URL(request.url));
+      return Response.json({ data: [] });
+    };
+    const client = makeCmsClient(fetch, "http://localhost:1337/api", null);
+
+    await client.getArticleBySlug("draft-article", "draft");
+    await client.getNewsBySlug("draft-news", "draft");
+
+    expect(urls.map(({ pathname }) => pathname)).toEqual([
+      "/api/articles",
+      "/api/news",
+    ]);
+    expect(urls[0]?.searchParams.get("status")).toBe("draft");
+    expect(urls[0]?.searchParams.get("filters[identity][slug][$eq]")).toBe(
+      "draft-article",
+    );
+    expect(
+      urls[0]?.searchParams.get("populate[sections][populate][hero]"),
+    ).toBe("true");
+    expect(urls[1]?.searchParams.get("status")).toBe("draft");
+    expect(urls[1]?.searchParams.get("filters[identity][slug][$eq]")).toBe(
+      "draft-news",
+    );
+    expect(urls[1]?.searchParams.get("populate[identity]")).toBe("true");
+  });
 });

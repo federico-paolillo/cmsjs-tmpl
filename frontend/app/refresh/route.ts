@@ -1,9 +1,6 @@
+import { timingSafeCompareSecret } from "@cmsjs/cms/secret";
 import { tagsForWebhook } from "@cmsjs/cms/tags";
-import {
-  parseWebhookPayload,
-  timingSafeCompareWebhookSecret,
-  type WebhookPayload,
-} from "@cmsjs/cms/webhook";
+import { parseWebhookPayload, type WebhookPayload } from "@cmsjs/cms/webhook";
 import { config } from "@cmsjs/config";
 import { revalidateTag } from "next/cache";
 
@@ -33,9 +30,7 @@ export async function POST(request: Request): Promise<Response> {
 
   const providedHeaderValue = request.headers.get(`x-${expectedSecretHeader}`);
 
-  if (
-    !timingSafeCompareWebhookSecret(providedHeaderValue, expectedSecretValue)
-  ) {
+  if (!timingSafeCompareSecret(providedHeaderValue, expectedSecretValue)) {
     return new Response("Unauthorized", { status: 401 });
   }
 

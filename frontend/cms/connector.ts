@@ -19,12 +19,16 @@ import type {
   NewsDto,
   NewsListItemDto,
 } from "@cmsjs/cms/model";
+import type { ContentStatus } from "@cmsjs/cms/preview";
 import { ok, type Result } from "@cmsjs/cms/result";
 
 export interface CmsConnector {
-  getArticleBySlug(slug: string): Promise<Result<ArticleDto>>;
+  getArticleBySlug(
+    slug: string,
+    status: ContentStatus,
+  ): Promise<Result<ArticleDto>>;
   getEventBySlug(slug: string): Promise<Result<EventDto>>;
-  getNewsBySlug(slug: string): Promise<Result<NewsDto>>;
+  getNewsBySlug(slug: string, status: ContentStatus): Promise<Result<NewsDto>>;
   getHomePage(): Promise<Result<HomePageDto>>;
   listArticles(): Promise<Result<ArticleListItemDto[]>>;
   listEvents(): Promise<Result<EventListItemDto[]>>;
@@ -36,16 +40,16 @@ export function makeCmsConnector(
   mediaBaseUrl: string,
 ): CmsConnector {
   const connector: CmsConnector = {
-    getArticleBySlug: (slug) =>
-      mapSingle(client.getArticleBySlug(slug), (data) =>
+    getArticleBySlug: (slug, status) =>
+      mapSingle(client.getArticleBySlug(slug, status), (data) =>
         toArticleDto(data, mediaBaseUrl),
       ),
     getEventBySlug: (slug) =>
       mapSingle(client.getEventBySlug(slug), (data) =>
         toEventDto(data, mediaBaseUrl),
       ),
-    getNewsBySlug: (slug) =>
-      mapSingle(client.getNewsBySlug(slug), (data) =>
+    getNewsBySlug: (slug, status) =>
+      mapSingle(client.getNewsBySlug(slug, status), (data) =>
         toNewsDto(data, mediaBaseUrl),
       ),
     getHomePage: () =>

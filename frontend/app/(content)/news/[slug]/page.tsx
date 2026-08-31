@@ -1,5 +1,6 @@
 import { getNewsBySlug } from "@cmsjs/cms/data";
 import { PageSwitch } from "@cmsjs/components/page-switch";
+import { PreviewBanner } from "@cmsjs/components/shared/preview-banner";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -26,5 +27,10 @@ export default async function NewsRoute({ params }: PageProps<"/news/[slug]">) {
     notFound();
   }
 
-  return <PageSwitch page={page} />;
+  return (
+    <>
+      <PreviewBanner />
+      <PageSwitch page={page} />
+    </>
+  );
 }

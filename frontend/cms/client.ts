@@ -1,5 +1,6 @@
 // Raw Strapi 5 client that returns Strapi-specific types
 
+import type { ContentStatus } from "@cmsjs/cms/preview";
 import {
   httpError,
   networkError,
@@ -33,9 +34,12 @@ export type NewsListData =
 const LIST_PAGE_SIZE = 100;
 
 export interface CmsClient {
-  getArticleBySlug(slug: string): Promise<Result<ArticleData>>;
+  getArticleBySlug(
+    slug: string,
+    status: ContentStatus,
+  ): Promise<Result<ArticleData>>;
   getEventBySlug(slug: string): Promise<Result<EventData>>;
-  getNewsBySlug(slug: string): Promise<Result<NewsData>>;
+  getNewsBySlug(slug: string, status: ContentStatus): Promise<Result<NewsData>>;
   getHomePage(): Promise<Result<HomePageData>>;
   listArticles(): Promise<Result<ArticleListData>>;
   listEvents(): Promise<Result<EventListData>>;
@@ -55,9 +59,10 @@ export function makeCmsClient(
   });
 
   const client: CmsClient = {
-    getArticleBySlug: (slug) => getArticleBySlug(rawClient, slug),
+    getArticleBySlug: (slug, status) =>
+      getArticleBySlug(rawClient, slug, status),
     getEventBySlug: (slug) => getEventBySlug(rawClient, slug),
-    getNewsBySlug: (slug) => getNewsBySlug(rawClient, slug),
+    getNewsBySlug: (slug, status) => getNewsBySlug(rawClient, slug, status),
     getHomePage: () => getHomePage(rawClient),
     listArticles: () => listArticles(rawClient),
     listEvents: () => listEvents(rawClient),
@@ -69,11 +74,12 @@ export function makeCmsClient(
 async function getArticleBySlug(
   rawClient: Client<paths>,
   slug: string,
+  status: ContentStatus,
 ): Promise<Result<ArticleData>> {
   const result = await toResult(
     rawClient.GET("/articles", {
       params: {
-        query: contentQuery(slug, {
+        query: contentQuery(slug, status, {
           identity: true,
           sections: { populate: { hero: true } },
         }),
@@ -94,7 +100,9 @@ async function getEventBySlug(
 ): Promise<Result<EventData>> {
   const result = await toResult(
     rawClient.GET("/events", {
-      params: { query: contentQuery(slug, { identity: true }) },
+      params: {
+        query: contentQuery(slug, "published", { identity: true }),
+      },
     }),
     { resource: "event", slug },
   );
@@ -108,10 +116,11 @@ async function getEventBySlug(
 async function getNewsBySlug(
   rawClient: Client<paths>,
   slug: string,
+  status: ContentStatus,
 ): Promise<Result<NewsData>> {
   const result = await toResult(
     rawClient.GET("/news", {
-      params: { query: contentQuery(slug, { identity: true }) },
+      params: { query: contentQuery(slug, status, { identity: true }) },
     }),
     { resource: "news", slug },
   );
@@ -197,9 +206,13 @@ async function toResult<T>(
   }
 }
 
-function contentQuery(slug: string, populate: unknown): never {
+function contentQuery(
+  slug: string,
+  status: ContentStatus,
+  populate: unknown,
+): never {
   return deepQuery({
-    status: "published",
+    status,
     populate,
     filters: { identity: { slug: { $eq: slug } } },
   });
