@@ -33,6 +33,7 @@ import type {
   SectionDto,
   TextDto,
 } from "@cmsjs/cms/model";
+import type { ContentStatus } from "@cmsjs/cms/preview";
 import { ok, type Result, validationError } from "@cmsjs/cms/result";
 
 function record(value: unknown): Record<string, unknown> | undefined {
@@ -50,8 +51,12 @@ function requiredString(
   field: string,
   path: string,
   problems: string[],
+  status: ContentStatus = "published",
 ): string | undefined {
   const value = node[field];
+  if (status === "draft" && value == null) {
+    return "";
+  }
   if (typeof value !== "string") {
     problems.push(`expected string at ${path}.${field}`);
     return undefined;
@@ -590,7 +595,11 @@ function blocks(
   value: unknown,
   path: string,
   problems: string[],
+  status: ContentStatus = "published",
 ): BlocksDto | undefined {
+  if (status === "draft" && value == null) {
+    return freezeDeep<BlocksDto>([]);
+  }
   const raw = array(value);
   if (!raw) {
     problems.push(`expected array at ${path}`);
@@ -611,6 +620,7 @@ function identity(
   value: unknown,
   path: string,
   problems: string[],
+  status: ContentStatus = "published",
 ): IdentityDto | undefined {
   const node = record(value);
   if (!node) {
@@ -618,7 +628,7 @@ function identity(
     return undefined;
   }
   const slug = requiredString(node, "slug", path, problems);
-  const title = requiredString(node, "title", path, problems);
+  const title = requiredString(node, "title", path, problems, status);
   if (slug === undefined || title === undefined) {
     return undefined;
   }
@@ -655,6 +665,7 @@ function section(
   value: unknown,
   path: string,
   problems: string[],
+  status: ContentStatus,
 ): SectionDto | undefined {
   const node = record(value);
   if (!node) {
@@ -667,7 +678,7 @@ function section(
   if (node.hero != null && heroImage === undefined) {
     return undefined;
   }
-  const content = blocks(node.content, `${path}.content`, problems);
+  const content = blocks(node.content, `${path}.content`, problems, status);
   if (content === undefined) {
     return undefined;
   }
@@ -683,7 +694,11 @@ function sectionEntries(
   value: unknown,
   path: string,
   problems: string[],
+  status: ContentStatus,
 ): SectionDto[] | undefined {
+  if (status === "draft" && value == null) {
+    return freezeDeep<SectionDto[]>([]);
+  }
   const raw = array(value);
   if (!raw) {
     problems.push(`expected array at ${path}`);
@@ -691,7 +706,7 @@ function sectionEntries(
   }
   const parsed: SectionDto[] = [];
   for (let i = 0; i < raw.length; i++) {
-    const entry = section(raw[i], `${path}[${i}]`, problems);
+    const entry = section(raw[i], `${path}[${i}]`, problems, status);
     if (entry === undefined) {
       return undefined;
     }
@@ -725,17 +740,28 @@ function article(
   value: unknown,
   path: string,
   problems: string[],
+  status: ContentStatus,
 ): ArticleDto | undefined {
   const node = record(value);
   if (!node) {
     problems.push(`expected object at ${path}`);
     return undefined;
   }
-  const identityDto = identity(node.identity, `${path}.identity`, problems);
+  const identityDto = identity(
+    node.identity,
+    `${path}.identity`,
+    problems,
+    status,
+  );
   if (identityDto === undefined) {
     return undefined;
   }
-  const sections = sectionEntries(node.sections, `${path}.sections`, problems);
+  const sections = sectionEntries(
+    node.sections,
+    `${path}.sections`,
+    problems,
+    status,
+  );
   if (sections === undefined) {
     return undefined;
   }
@@ -797,18 +823,24 @@ function news(
   value: unknown,
   path: string,
   problems: string[],
+  status: ContentStatus,
 ): NewsDto | undefined {
   const node = record(value);
   if (!node) {
     problems.push(`expected object at ${path}`);
     return undefined;
   }
-  const identityDto = identity(node.identity, `${path}.identity`, problems);
+  const identityDto = identity(
+    node.identity,
+    `${path}.identity`,
+    problems,
+    status,
+  );
   if (identityDto === undefined) {
     return undefined;
   }
-  const summary = requiredString(node, "summary", path, problems);
-  const content = blocks(node.content, `${path}.content`, problems);
+  const summary = requiredString(node, "summary", path, problems, status);
+  const content = blocks(node.content, `${path}.content`, problems, status);
   if (summary === undefined || content === undefined) {
     return undefined;
   }
@@ -889,13 +921,19 @@ function newsListItem(
 export function toArticleDto(
   raw: ArticleData,
   mediaBaseUrl: string,
+  status: ContentStatus,
 ): Result<ArticleDto> {
-  return normalizeResult(mapResource("article", raw, article), (value) => ({
-    ...value,
-    sections: value.sections.map((entry) =>
-      normalizeSection(entry, mediaBaseUrl),
+  return normalizeResult(
+    mapResource("article", raw, (value, path, problems) =>
+      article(value, path, problems, status),
     ),
-  }));
+    (value) => ({
+      ...value,
+      sections: value.sections.map((entry) =>
+        normalizeSection(entry, mediaBaseUrl),
+      ),
+    }),
+  );
 }
 
 export function toHomePageDto(
@@ -921,11 +959,17 @@ export function toEventDto(
 export function toNewsDto(
   raw: NewsData,
   mediaBaseUrl: string,
+  status: ContentStatus,
 ): Result<NewsDto> {
-  return normalizeResult(mapResource("news", raw, news), (value) => ({
-    ...value,
-    content: normalizeBlocks(value.content, mediaBaseUrl),
-  }));
+  return normalizeResult(
+    mapResource("news", raw, (value, path, problems) =>
+      news(value, path, problems, status),
+    ),
+    (value) => ({
+      ...value,
+      content: normalizeBlocks(value.content, mediaBaseUrl),
+    }),
+  );
 }
 
 export function toArticleListItemDto(

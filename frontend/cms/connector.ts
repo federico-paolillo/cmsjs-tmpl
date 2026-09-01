@@ -42,7 +42,7 @@ export function makeCmsConnector(
   const connector: CmsConnector = {
     getArticleBySlug: (slug, status) =>
       mapSingle(client.getArticleBySlug(slug, status), (data) =>
-        toArticleDto(data, mediaBaseUrl),
+        toArticleDto(data, mediaBaseUrl, status),
       ),
     getEventBySlug: (slug) =>
       mapSingle(client.getEventBySlug(slug), (data) =>
@@ -50,7 +50,7 @@ export function makeCmsConnector(
       ),
     getNewsBySlug: (slug, status) =>
       mapSingle(client.getNewsBySlug(slug, status), (data) =>
-        toNewsDto(data, mediaBaseUrl),
+        toNewsDto(data, mediaBaseUrl, status),
       ),
     getHomePage: () =>
       mapSingle(client.getHomePage(), (data) =>

@@ -673,7 +673,7 @@ export interface components {
       updatedAt?: string;
       /**
        * @description A datetime field
-       * @default 2026-08-18T16:49:17.915Z
+       * @default 2026-08-31T07:43:39.032Z
        */
       publishedAt: string;
       related: unknown;
@@ -761,7 +761,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.912Z
+               * @default 2026-08-31T07:43:39.029Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -839,7 +839,7 @@ export interface operations {
           data: {
             /**
              * @description A datetime field
-             * @default 2026-08-18T16:49:17.917Z
+             * @default 2026-08-31T07:43:39.036Z
              */
             publishedAt: string;
             /** @description A component field */
@@ -871,7 +871,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.917Z
+               * @default 2026-08-31T07:43:39.036Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -979,7 +979,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.916Z
+               * @default 2026-08-31T07:43:39.033Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1059,7 +1059,7 @@ export interface operations {
           data: {
             /**
              * @description A datetime field
-             * @default 2026-08-18T16:49:17.917Z
+             * @default 2026-08-31T07:43:39.036Z
              */
             publishedAt?: string;
             /** @description A component field */
@@ -1091,7 +1091,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.918Z
+               * @default 2026-08-31T07:43:39.037Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1190,7 +1190,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.918Z
+               * @default 2026-08-31T07:43:39.037Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1326,7 +1326,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.920Z
+               * @default 2026-08-31T07:43:39.039Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1412,7 +1412,7 @@ export interface operations {
             when?: string;
             /**
              * @description A datetime field
-             * @default 2026-08-18T16:49:17.921Z
+             * @default 2026-08-31T07:43:39.040Z
              */
             publishedAt: string;
             /** @description A component field */
@@ -1448,7 +1448,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.921Z
+               * @default 2026-08-31T07:43:39.040Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1578,7 +1578,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.920Z
+               * @default 2026-08-31T07:43:39.039Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1666,7 +1666,7 @@ export interface operations {
             when?: string;
             /**
              * @description A datetime field
-             * @default 2026-08-18T16:49:17.921Z
+             * @default 2026-08-31T07:43:39.041Z
              */
             publishedAt?: string;
             /** @description A component field */
@@ -1702,7 +1702,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.922Z
+               * @default 2026-08-31T07:43:39.041Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1809,7 +1809,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.922Z
+               * @default 2026-08-31T07:43:39.041Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1892,7 +1892,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.923Z
+               * @default 2026-08-31T07:43:39.042Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -1956,7 +1956,7 @@ export interface operations {
             title?: string;
             /**
              * @description A datetime field
-             * @default 2026-08-18T16:49:17.924Z
+             * @default 2026-08-31T07:43:39.043Z
              */
             publishedAt?: string;
             /** @description A component field */
@@ -1988,7 +1988,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.924Z
+               * @default 2026-08-31T07:43:39.043Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -2068,7 +2068,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.924Z
+               * @default 2026-08-31T07:43:39.044Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -2191,7 +2191,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.925Z
+               * @default 2026-08-31T07:43:39.045Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -2274,7 +2274,7 @@ export interface operations {
             content: unknown[];
             /**
              * @description A datetime field
-             * @default 2026-08-18T16:49:17.930Z
+             * @default 2026-08-31T07:43:39.046Z
              */
             publishedAt: string;
             /** @description A component field */
@@ -2308,7 +2308,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.930Z
+               * @default 2026-08-31T07:43:39.046Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -2427,7 +2427,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.929Z
+               * @default 2026-08-31T07:43:39.045Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -2512,7 +2512,7 @@ export interface operations {
             content?: unknown[];
             /**
              * @description A datetime field
-             * @default 2026-08-18T16:49:17.930Z
+             * @default 2026-08-31T07:43:39.046Z
              */
             publishedAt?: string;
             /** @description A component field */
@@ -2546,7 +2546,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.930Z
+               * @default 2026-08-31T07:43:39.046Z
                */
               publishedAt: string;
               /** @description A component field */
@@ -2650,7 +2650,7 @@ export interface operations {
               updatedAt?: string;
               /**
                * @description A datetime field
-               * @default 2026-08-18T16:49:17.931Z
+               * @default 2026-08-31T07:43:39.047Z
                */
               publishedAt: string;
               /** @description A component field */

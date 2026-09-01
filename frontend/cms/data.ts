@@ -21,6 +21,7 @@ export async function getArticleBySlug(
   cacheTag("articles", `article:${slug}`);
 
   const { isEnabled } = await draftMode();
+
   const result = await deps.connector.getArticleBySlug(
     slug,
     isEnabled ? "draft" : "published",
@@ -47,6 +48,7 @@ export async function getNewsBySlug(slug: string): Promise<NewsDto | null> {
   cacheTag("news", `news:${slug}`);
 
   const { isEnabled } = await draftMode();
+
   const result = await deps.connector.getNewsBySlug(
     slug,
     isEnabled ? "draft" : "published",

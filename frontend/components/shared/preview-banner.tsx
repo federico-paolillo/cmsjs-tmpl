@@ -1,7 +1,9 @@
 import { draftMode } from "next/headers";
 
 export async function PreviewBanner() {
-  if (!(await draftMode()).isEnabled) {
+  const { isEnabled } = await draftMode();
+
+  if (!isEnabled) {
     return null;
   }
 
