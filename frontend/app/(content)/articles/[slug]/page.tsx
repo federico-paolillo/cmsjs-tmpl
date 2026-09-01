@@ -29,10 +29,5 @@ export default async function ArticleRoute({
     notFound();
   }
 
-  return (
-    <>
-      <PreviewBanner />
-      <PageSwitch page={page} />
-    </>
-  );
+  return <PageSwitch page={page} />;
 }

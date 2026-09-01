@@ -27,10 +27,5 @@ export default async function NewsRoute({ params }: PageProps<"/news/[slug]">) {
     notFound();
   }
 
-  return (
-    <>
-      <PreviewBanner />
-      <PageSwitch page={page} />
-    </>
-  );
+  return <PageSwitch page={page} />;
 }
