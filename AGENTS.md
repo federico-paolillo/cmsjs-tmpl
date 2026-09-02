@@ -1,17 +1,4 @@
-# Agent Instructions
-
-## This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may
-all differ from your training data. Read the relevant guide in
-`node_modules/next/dist/docs/` (resolved from this file's directory; in
-monorepos the `next` package may not be visible from the repo root) before
-writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at
-`node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a
-diff only re-creates the uncommitted change; committing it with your work keeps
-the tree clean.
+# AGENTS.md
 
 ## Shared Engineering Guidelines
 
@@ -34,7 +21,7 @@ the tree clean.
   unrelated cleanup unless it is required for canonical validation to pass.
 - At dependency boundaries, distinguish invalid data from unavailability,
   propagate cancellation, preserve exception causes, keep diagnostics
-  secret-free, and cover changed failure behavior with focused tests.
+  secret-free.
 - Give each filtering, normalization, validation, and configuration policy one
   authoritative enforcement owner. Add another enforcement layer only for a
   distinct trust boundary or independently stated failure mode.
@@ -42,17 +29,9 @@ the tree clean.
   semantics; telemetry infrastructure owns transport, routing, batching,
   authentication, and sampling. Do not duplicate application field allowlists
   downstream without a distinct trust-boundary requirement.
-- This is not an enterprise-grade workflow. Cover the happy path and the most
+- This is not an enterprise-grade project. Cover the happy path and the most
   obvious and material failure paths; do not harden against every conceivable
   edge case.
-- Treat fresh measurement as a blocking acceptance gate only when the SEED
-  explicitly labels it as one and identifies the evidence, environment, and
-  owner. Do not turn general words such as "measure", "prove", or "calibrate"
-  into an unstated hardware or harness requirement.
-- When the SEED authorizes recorded evidence or a conservative provisional
-  default, use it, state the known limitation and recalibration trigger, and do
-  not demand fresh characterization. Stories must distinguish mandatory release
-  gates from provisional defaults and post-release triggers.
 
 ## Verification Guidelines
 
@@ -71,10 +50,6 @@ the tree clean.
   cross-boundary integration test only when behavior can fail despite the
   lower-level check, such as serialization compatibility, dependency semantics,
   or framework wiring.
-- Require negative-path coverage for trust boundaries, security rules,
-  cancellation and concurrency, atomic data replacement, data-loss risks, and
-  previously observed regressions. Do not require a test for every branch,
-  defensive condition, or log call.
 - Log prose is not an API. Test exact text only when the wording is itself a
   stable filtering or operator contract. Otherwise test severity, event
   identity, required fields, forbidden sensitive fields, and cardinality with
@@ -100,10 +75,10 @@ the tree clean.
 - Do not require file, module, function, or test comments merely for coverage.
   Do not narrate names or create a Markdown document instead of clarifying the
   code. Prefer a precise comment beside the constrained mechanism.
-- Keep README content to project purpose, expected environment variables and
-  their contract, and non-obvious operator constraints. Do not teach standard
-  Docker, Compose, shell, Git, or service-lifecycle commands, and do not narrate
-  implementation details.
+- Do not change README contents unless one of your changes directly contradicts
+  the contents.
+- Do not teach standard Docker, Compose, shell, Git, or service-lifecycle
+  commands, and do not narrate implementation details.
 - Do not create separate feature, developer, implementation, test, or
   architecture documents unless the SEED explicitly requires one. Encode
   behavior in code and focused tests; explain remaining non-obvious reasoning
@@ -128,9 +103,10 @@ This is a reusable Strapi 5 + Next.js template meant to give a best-in-class
 foundation. Treat the architecture as an asset to extend, not rewrite.
 
 This template is deliberately SSR + ISR. Treat that rendering model as a
-contract to preserve while building a specific site. The bundled styles and
-components are demonstrative presentation examples, not design laws or assets to
-reuse as-is:
+contract to preserve while building a specific site.
+
+The bundled styles and components are demonstrative presentation examples, not
+design laws or assets to reuse as-is.
 
 - The frontend is SSR + ISR only. Do not add `generateStaticParams`, a static
   export, or build-time prerendering of content. On-demand revalidation flows
@@ -176,7 +152,7 @@ reuse as-is:
   Next.js feature as long as the architecture above is unchanged.
 - Frontend tests use vitest and may be skipped only when they would only assert
   visuals. Non-visual server-side logic at trust boundaries (webhook secret and
-  tag mapping, mapper validation, query serialization) is required coverage.
+  tag mapping, mapper validation, query serialization) is recommended coverage.
 - Use Tailwind CSS as-is. Normalize genuinely repeated patterns into custom
   utilities. Creating a custom theme or a component/design system is allowed and
   recommended when the site calls for it (e.g., a showcase site).

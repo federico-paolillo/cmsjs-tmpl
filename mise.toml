@@ -19,6 +19,11 @@ description = "Generate the Strapi OpenAPI schema"
 dir = "backend"
 run = "npm run openapi"
 
+[tasks."be:dev"]
+description = "Run the Strapi 5 backend"
+dir = "backend"
+run = "npm run dev"
+
 [tasks."fe:build"]
 description = "Build the Next.js frontend"
 dir = "frontend"
@@ -48,3 +53,13 @@ run = "npm run check"
 description = "Format the frontend with Biome"
 dir = "frontend"
 run = "npm run format"
+
+[tasks."fe:dev"]
+description = "Run the Next.js frontend"
+dir = "frontend"
+run = "npm run dev"
+
+[tasks."dev"]
+run = [
+  { tasks = ["be:dev", "fe:dev"] }
+]

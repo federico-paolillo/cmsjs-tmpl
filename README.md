@@ -1,9 +1,17 @@
-# Strapi 5 + Next.js showcase template
+# Strapi 5 + Next.js 16
 
 A reusable foundation for read-only (or low-interaction) showcase websites —
 company sites, football-team pages, parishes, and the like. A Strapi 5 backend
 serves content; a Next.js 16 frontend renders it. This template is meant to be
 extended by a coding agent or developer into a complete, styled site.
+
+## Running locally
+
+Refer to [mise.toml](mise.toml) file for a list of useful tasks. Use
+`mise run dev` to quickly launch the backend and frontend.
+
+On first boot, the backend creates a default admin user and provisions the
+revalidation webhook when the relevant environment variables are set.
 
 ## Rendering model
 
@@ -17,41 +25,35 @@ The template is intentionally **not** a static (SSG) site: there is no
 content. Pages are rendered on the server and cached for a `days` profile; edits
 in Strapi invalidate the affected cache tags.
 
-## Preview
+## Preview mode
 
-Article and News Preview is available through Strapi Preview and Next Draft Mode.
-Draft requests bypass caches only in the editor's browser; public requests stay
-on the existing SSR + ISR path. Set backend `PREVIEW_CLIENT_URL`, use the same
-server-only `PREVIEW_SECRET` in backend and frontend, and configure the
-server-only `CMS_API_TOKEN` with least-privilege read access for all CMS content
-the site serves, including draft Article and News reads. Additional Draft &
-Publish types receive Preview selectively under the root `AGENTS.md` guidance.
+Article and News Preview is available through Strapi Preview and Next Draft
+Mode. Draft requests bypass caches only in the editor's browser; public requests
+stay on the existing SSR + ISR path.
 
 ## Presentation examples
 
 The bundled styles and components demonstrate one complete presentation; they
 are not design laws or presentation assets to reuse as-is. Adapt the target
 site's visual language while preserving the SSR + ISR model, CMS pipeline, and
-route/component ownership conventions in `AGENTS.md`.
+route/component ownership conventions in [`AGENTS.md`](AGENTS.md).
 
 ## Environment variables
 
-The backend reads `backend/.env` (see `backend/.env.example`).
-
-The frontend reads `frontend/.env*` (see `frontend/.env.example`). The frontend
-fails fast at startup if a required variable is missing.
-
-## Running locally
-
-Start the backend (`cd backend && npm run dev`) and the frontend
-(`cd frontend && npm run dev`) on their default ports. On first boot the backend
-creates a default admin user and provisions the revalidation webhook when the
-relevant `ADMIN_*` and `WEBHOOKS_NEXTJS_TARGET` variables are set.
+The backend reads `backend/.env` (see `backend/.env.example`). The frontend
+reads `frontend/.env*` (see `frontend/.env.example`). The frontend fails fast at
+startup if a required variable is missing.
 
 ## Adding a content type
 
-Extend the existing pipeline end-to-end rather than adding a parallel path:
-Strapi schema (via the admin UI) → `frontend/cms/client.ts` → `mappers.ts` →
-`connector.ts` → `data.ts` (cached read + cache tags) → webhook tag mapping
-(`cms/tags.ts`, `cms/cache.ts`) → `sitemap.ts` → navigation entry → a page
-component and its route.
+Extend the existing pipeline end-to-end rather than adding a parallel path.
+
+1. Strapi schema (via the Strapi admin UI)
+2. `frontend/cms/client.ts`
+3. `mappers.ts`
+4. `connector.ts`
+5. `data.ts` (cached read + cache tags)
+6. Webhook tag mapping (`cms/tags.ts`, `cms/cache.ts`)
+7. `sitemap.ts`
+8. Navigation entry
+9. A page component and its route
