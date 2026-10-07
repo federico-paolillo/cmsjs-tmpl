@@ -114,13 +114,13 @@ concurrency, or authorization protocol:
 
 ## Orchestration Discipline
 
-- Run coordination using the configured `coordinator` agent profile and select
-  the configured `planner`, `worker`, and `reviewer` profiles by exact name. Do
+- Run coordination by assuming the role of the configured `coordinator` agent profile
+  and select the configured `planner`, `worker`, and `reviewer` profiles by exact name. Do
   not suggest or pass model or reasoning-effort overrides when starting them;
   each profile owns those settings.
 - Give each role session its complete task, constraints, and expected handoff
   marker up front.
-- After starting work or receiving the role's last message, wait at least 20
+- After starting work or receiving the role's last message, wait at least 30
   uninterrupted minutes before sending a follow-up, interrupt, status request,
   or nudge.
 - The quiet period may end early only when the selected orchestration mechanism
@@ -133,6 +133,9 @@ concurrency, or authorization protocol:
 - Treat the explicit marker in the role transcript as the handoff source of
   truth. A `done`, `idle`, or `unknown` orchestration state is not itself a
   completed handoff.
+- Do not needlessly provide summary of progression after every quiet period. The
+  orchestration will run mostly unattended so assume nobody is reading your transcript.
+  Save tokens.
 
 ## Completion Signals
 
